@@ -34,24 +34,23 @@ class CSS_MenuMaker extends WP_Widget {
     $post = get_post($selected_menu);
     
     $wordpress_menu = get_post_meta($selected_menu, "cssmenu_structure", true);
-    $cssmenu_css = get_post_meta($selected_menu, "cssmenu_css", true);
+    $menu_css = get_post_meta($selected_menu, "cssmenu_css", true);
+    $menu_js = get_post_meta($selected_menu, "cssmenu_js", true);    
 
     wp_nav_menu(array(
       'menu' => $wordpress_menu,
-      'container_id' => 'cssmenu', 
+      'container_id' => "cssmenu-{$selected_menu}", 
       'walker' => new CSS_Menu_Maker_Walker()
     ));
    
-   
-    wp_enqueue_style( 'custom-style', plugins_url().'/cssmenumaker/css/menu_styles.css');   
-    $custom_css = ".mycolor { background: {#000};}";
-    wp_add_inline_style( 'custom-style', $custom_css );
+    wp_enqueue_style("dynamic-css-{$selected_menu}", admin_url('admin-ajax.php')."?action=dynamic_css&selected={$selected_menu}");
+    if($menu_js) {
+      wp_enqueue_script("dynamic-script-{$selected_menu}", admin_url('admin-ajax.php')."?action=dynamic_script&selected={$selected_menu}");    
+    }
     
-    print "hello world widget"; 
-  }
-  
+  }  
 }
 
-  
+
   
 ?>
