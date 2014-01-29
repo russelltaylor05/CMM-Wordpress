@@ -2,9 +2,9 @@
 /**
  * Plugin Name: CSS MenuMaker
  * Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
- * Description: A brief description of the Plugin.
- * Version: The Plugin's Version Number, e.g.: 1.0
- * Author: Name Of The Plugin Author
+ * Description: CSS MenuMaker
+ * Version: 1.0
+ * Author: CSS MenuMaker
  * Author URI: http://URI_Of_The_Plugin_Author
  * License: A "Slug" license name e.g. GPL2
  */
@@ -59,9 +59,12 @@ function cssmenumaker_modify_nav_menu_args($args)
   	if ($cssmenu_location == $args['theme_location']) {      
       $args['menu'] = $cssmenu_strucutre;
   		$args['container_id'] = "cssmenu-{$available_menu->ID}";
+  		$args['container_class'] = "cssmenumaker-menu";
       $args['menu_class'] = '';
+      $args['menu_id'] = '';      
       $args['walker'] = new CSS_Menu_Maker_Walker();
 
+      wp_enqueue_style( 'cssmenumaker-base-styles', plugins_url().'/cssmenumaker/css/menu_styles.css');
       wp_enqueue_style("dynamic-css-{$available_menu->ID}", admin_url('admin-ajax.php')."?action=dynamic_css&selected={$available_menu->ID}");
       if($menu_js) {
         wp_enqueue_script("dynamic-script-{$available_menu->ID}", admin_url('admin-ajax.php')."?action=dynamic_script&selected={$available_menu->ID}");    

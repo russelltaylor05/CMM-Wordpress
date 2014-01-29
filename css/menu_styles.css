@@ -1,0 +1,21 @@
+
+/* These styles will be applied to all MenuMaker Menus */
+.cssmenumaker-menu,
+.cssmenumaker-menu ul,
+.cssmenumaker-menu li,
+.cssmenumaker-menu span,
+.cssmenumaker-menu a {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  line-height: 1;
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;  
+}
+
+.cssmenumaker-menu ul ul {
+  z-index: 1000;
+}
+  

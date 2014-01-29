@@ -17,7 +17,7 @@ $cssmenu_css = preg_replace("/#cssmenu/si", "#cssmenu-{$selected_menu}", $cssmen
 for($cnt = 0; $cnt < IMAGE_CNT; $cnt++) {
   if(isset($images[$cnt]['url'])) {
     $file_name = substr($images[$cnt]['file'], strrpos($images[$cnt]['file'], "/") + 1, strlen($images[$cnt]['file']));
-    $cssmenu_css = preg_replace("/\('$file_name'\)/si", "('".$images[$cnt]['url']."')", $cssmenu_css);
+    $cssmenu_css = preg_replace("/\('?$file_name'?\)/si", "('".$images[$cnt]['url']."')", $cssmenu_css);
   }
 }
 
