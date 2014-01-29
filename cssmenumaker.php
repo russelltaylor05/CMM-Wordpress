@@ -76,6 +76,81 @@ function cssmenumaker_modify_nav_menu_args($args)
 
 
 
+/* 
+ * Shortcodes
+ */
+
+add_shortcode('cssmenumaker', 'cssmenumaker_shortcode');
+function cssmenumaker_shortcode($atts) 
+{
+  extract(shortcode_atts(array('id' => 0), $atts));  
+  return cssmenumaker_print_menu($atts['id']);
+}
+
+add_filter('manage_edit-cssmenu_columns', 'cssmenumaker_edit_columns') ;
+function cssmenumaker_edit_columns($columns) 
+{
+	$columns = array(
+		'cb' => '<input type="checkbox" />',
+		'title' => __( 'Accordion Menu' ),
+		'shortcode' => __( 'Shortcode' ),
+		'date' => __( 'Date' )
+	);
+	return $columns;
+}
+
+add_action('manage_cssmenu_posts_custom_column', 'cssmenumenumaker_manage_columns', 10, 2);
+function cssmenumenumaker_manage_columns($column, $post_id) 
+{
+	global $post;
+	switch( $column ) {
+		case 'shortcode' :
+				print '[cssmenumaker id="'.$post_id.'"]';
+			break;
+		default :
+			break;
+	}
+}
+
+
+
+
+/* 
+ * Generic Print Menu
+ * $menu_id  = the post ID
+ */
+
+function cssmenumaker_print_menu($menu_id = 0)
+{
+  if($menu_id) {
+    $wordpress_menu = get_post_meta($menu_id, "cssmenu_structure", true);
+    $menu_css = get_post_meta($menu_id, "cssmenu_css", true);
+    $menu_js = get_post_meta($menu_id, "cssmenu_js", true);    
+
+    wp_nav_menu(array(
+      'menu' => $wordpress_menu,
+      'container_id' => "cssmenu-{$menu_id}", 
+      'container_class' => 'cssmenumaker-menu',
+      'walker' => new CSS_Menu_Maker_Walker(),
+      'menu_class' => '',
+      'menu_id' => '',      
+    ));
+
+    wp_enqueue_style('cssmenumaker-base-styles', plugins_url().'/cssmenumaker/css/menu_styles.css');
+    wp_enqueue_style("dynamic-css-{$menu_id}", admin_url('admin-ajax.php')."?action=dynamic_css&selected={$menu_id}");
+    if($menu_js) {
+      wp_enqueue_script("dynamic-script-{$menu_id}", admin_url('admin-ajax.php')."?action=dynamic_script&selected={$menu_id}");    
+    }    
+  }    
+}
+
+
+
+
+
+
+
+
 
 
 ?>

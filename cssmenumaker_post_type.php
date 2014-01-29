@@ -85,7 +85,7 @@ function cssmenumaker_admin_menu_options( $cssmenu )
   print " </select>";
 
   print '<label>Menu Location</label>';
-  print "<p class='help'>Select a theme location to display your menu. Leave blank if you plan on using this menu as a widget.</p>";  
+  print "<p class='help'>Select a theme location to display your menu. Leave blank if you plan on using this menu as a Widget or Shortcode.</p>";  
   print '<select name="cssmenu_location">';  
   print "<option>< blank ></option>";
   $registerd_locations = get_registered_nav_menus();  
@@ -227,10 +227,10 @@ function cssmenumaker_template_include ($template_path)
   return $template_path;
 }
 
+
 /* 
  * Help Page
  */
- 
 add_action('admin_menu', 'cssmenumake_menu_help');
 function cssmenumake_menu_help() {
 	add_submenu_page('edit.php?post_type=cssmenu', 
@@ -238,10 +238,8 @@ function cssmenumake_menu_help() {
                     'Help', 'manage_options', __FILE__, 
                     'cssmenumaker_help_page');
 }
-
 function cssmenumaker_help_page() 
 {?>
-
   <div id="help-page">
     <h1>Plugin Help</h1>
     <p>This wordpress plugin is brand new so we are looking to gather feedback from our users. 
@@ -249,8 +247,6 @@ function cssmenumaker_help_page()
        let us know what problems you are running into.</p>
        <p><a href="http://cssmenumaker.com/wordpress-plugin-support" target="_blank" class="button-primary">Submit Ticket</a></p>
   </div>
-  
-
 <?php }
 
 
