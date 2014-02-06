@@ -38,7 +38,17 @@ add_action('wp_ajax_nopriv_dynamic_script', 'dynamic_script');
 function dynamic_script() {
   require(dirname(__FILE__).DIRECTORY_SEPARATOR.'scripts/dynamic.js.php');
   exit;
+}
+
+
+add_action('wp_ajax_get_menu_json', 'ajax_get_menu_json');
+add_action('wp_ajax_nopriv_get_menu_json', 'ajax_get_menu_json');
+function ajax_get_menu_json() {
+  $theme_id = $_GET['theme_id'];
+  print file_get_contents(dirname(__FILE__).DIRECTORY_SEPARATOR."menus/{$theme_id}/menu.json");
+  die();
 }  
+
 
 
 /* 
