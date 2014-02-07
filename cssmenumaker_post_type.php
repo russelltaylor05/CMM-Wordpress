@@ -36,7 +36,7 @@ function cssmenumaker_create_menu_post_type()
     'capability_type'    => 'post',
     'has_archive'        => true,
     'hierarchical'       => false,
-    'menu_position'      => null,
+    'menu_position'      => false,
     'supports'           => array( 'title')
   );
 
@@ -89,6 +89,7 @@ function cssmenumaker_admin_menu_options($cssmenu)
   $cssmenu_theme_id = esc_html( get_post_meta( $cssmenu->ID, 'cssmenu_theme_id', true));  
   $cssmenu_step = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_step', true));    
   $wordpress_menus = get_terms('nav_menu', array( 'hide_empty' => true ) );
+  $themeMenus = json_decode(file_get_contents(dirname(__FILE__).DIRECTORY_SEPARATOR."menus/theme_select.json"));  
   if(!$cssmenu_step) {
     $cssmenu_step = 1;
   }
@@ -106,7 +107,7 @@ function cssmenumaker_admin_menu_options($cssmenu)
     print selected( $menu->slug, $cssmenu_structure ).'>';
     print $menu->name;
     print "</option>";
-  }  
+  }
   print " </select>";
   print "</div><!-- .panel -->";  
 
@@ -130,30 +131,60 @@ function cssmenumaker_admin_menu_options($cssmenu)
   print "<div id='theme-options' class='option-pane clearfix'>";
   print "<div class='panel'>";
   print '<h4>Theme</h4>';  
-  print "<input type='text' name='cssmenu_theme_id' value='".$cssmenu_theme_id."' /><br>";
-  print "<a href='#theme-select-overlay' id='theme-select-trigger'>Select Theme</a>";    
+  print "<input type='hidden' name='cssmenu_theme_id' value='".$cssmenu_theme_id."' />";
+  print '<a href="#theme-select-overlay" id="theme-select-trigger" class="theme-trigger clearfix"><span>';
+  foreach($themeMenus as $theme) {
+    if($theme->id == $cssmenu_theme_id) {
+      print "<img src='".plugins_url()."/cssmenumaker/menus/".$theme->thumbpath."' />";
+    }
+  }
+  print '</span><div class="cssmenu-arrow"></div></a>';
+  print "<a href='#theme-select-overlay' id='theme-select-trigger' class='theme-trigger-initial'>Select a Theme</a>";    
   print "</div><!-- .panel -->";  
 
   if($cssmenu_step == 2) {
     require(dirname(__FILE__).DIRECTORY_SEPARATOR.'builder_settings.php');
-  }
+  } 
   print "</div><!-- #theme-options -->";
 
   print "<input type='hidden' name='cssmenu_step' value='".$cssmenu_step."' /><br>";  
-  print '<input type="submit" name="publish" id="publish" class="button button-primary button-large" value="Publish" accesskey="p">';
+
+  if($cssmenu_step == 2) {
+    print '<input type="submit" name="publish" id="publish" class="button button-primary button-large" value="Save Menu" accesskey="p">';
+  }  else {
+    print '<input type="submit" name="publish" id="publish" class="button button-primary button-large" value="Next" accesskey="p">';    
+  }
+
+  
 
   print "</div><!-- #options-display -->";  
    
-
-  
-  
-  
   /* Theme Select Overlay */
-  print "<div id='theme-select-overlay'><div class='container'>"; 
-  $themeMenus = json_decode(file_get_contents(dirname(__FILE__).DIRECTORY_SEPARATOR."menus/theme_select.json"));
+  print "<div id='theme-select-overlay'><div class='container'>";
+  print "<div id='filters'>";
+  print "<h4>Filters</h4>";  
+  print "<ul class='main-cats cats'>";
+  print "<li><a href='#' class='drop-down'>Drop Down</a></li>";
+  print "<li><a href='#' class='flyout'>Flyout</a></li>";
+  print "<li><a href='#' class='horizontal'>Horizontal</a></li>";
+  print "<li><a href='#' class='vertical'>Vertical</a></li>";
+  print "<li><a href='#' class='tabbed'>Tabbed</a></li>";  
+  print "</ul>";
+  print "<ul class='sub-cats cats'>";
+  print "<li><a href='#' class='accordion'>Accordion</a></li>";
+  print "<li><a href='#' class='jquery'>jQuery</a></li>";
+  print "<li><a href='#' class='responsive'>Responsive</a></li>";
+  print "<li><a href='#' class='pure-css'>Pure CSS</a></li>";
+  print "</ul>";
+  print "</div>";
+  
   print "<ul id='theme-thumbs'>";
   foreach($themeMenus as $id => $menu) {
-    print "<li><a href='#' data-id='".$menu->id."'><img src='".plugins_url()."/cssmenumaker/menus/".$menu->thumbpath."' /></a></li>";
+    $classes = "";
+    foreach($menu->terms as $term) {
+      $classes .= "{$term} ";
+    }
+    print "<li class='{$classes}'><a href='#' data-id='".$menu->id."'><img src='".plugins_url()."/cssmenumaker/menus/".$menu->thumbpath."' /></a></li>";
   }
   print "</ul>";
   print "</div></div><!-- /#theme-overlay -->";  

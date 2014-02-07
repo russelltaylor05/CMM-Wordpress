@@ -29,6 +29,7 @@ function CSSMenuMaker (defaultData, previousData)
   this.renderCSS = renderCSS;
   this.renderJquery = renderJquery; 
   this.getAllSettings = getAllSettings;
+  this.jqueryStatus = 0;
   
   if(defaultData) {
     this.css = defaultData.css;
@@ -126,7 +127,6 @@ params
 */
 function renderJquery(params)
 {
-
   var output = this.jquery;
   output = output.replace(/#cssmenu/ig, params.menuClass);   
   output = output.replace(/#menu_class#/ig, params.menuClass);

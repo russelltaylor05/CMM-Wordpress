@@ -17,6 +17,7 @@ function previewMenu(builder)
 	var menuSettings = Array();
 	var jquerySettings = Array();
 	var parser = new(less.Parser);
+  var renderedJquery = undefined;
   
             
 	/* Update build.currentSettings  */	
@@ -43,15 +44,20 @@ function previewMenu(builder)
   /* jQuery */
 
   if(builder.jquery) {
-    jquerySettings['menuClass'] = menuSettings['menuClass'];
-    var renderedJquery = builder.renderJquery(jquerySettings);      
+
+    jquerySettings['menuClass'] = builder.currentSettings['menuClass'];    
+    renderedJquery = builder.renderJquery(jquerySettings);      
     $("#cssmenu_js").html(renderedJquery);      
-    eval(renderedJquery);	        
+    
+    if(!builder.jqueryStatus) {
+      eval(renderedJquery);  
+    }        
+    builder.jqueryStatus = 1;    
+    
   } else {
      $("#cssmenu_js").val("");  
   }
 
-  
 
   $("#cssmenu_settings").val(JSON.stringify(builder));
   
@@ -298,6 +304,7 @@ $(document).ready(function()
 
     initSettings(previewMenu, builder); /* hide and show available settings */
     settingsFunctionality(builder);
+    
         
   } else {
 
@@ -310,29 +317,66 @@ $(document).ready(function()
   }
 
 
+  
+  
+  /*******************/
+  /* Theme Selection */
+  /******************/
+  
 	$("#theme-select-trigger").fancybox({
 		maxWidth	: 1100,
 		fitToView	: false,
 		width		: '80%',
 		height		: '80%',
 		autoSize	: false,
-		closeClick	: true,
+		closeClick	: false,
 		openEffect	: 'none',
 		closeEffect	: 'none'
 	});  
   
+  if(!theme_id) {
+    $(".theme-trigger").hide();
+  } else {
+    $(".theme-trigger-initial").hide();
+  }
+  
   $("#theme-thumbs a").click(function(event){
     event.preventDefault();
-    var id = $(this).attr('data-id');
-    console.log(id);
-    $("input[name='cssmenu_theme_id']").val(id);
+    theme_id = $(this).attr('data-id');
+    $("input[name='cssmenu_theme_id']").val(theme_id);
     $.fancybox.close();    
     if($("input[name='cssmenu_step']").val() == 2) {
       $("#cssmenu_js").val("");  
       $("#cssmenu_css").val("");
       $("#cssmenu_settings").val("");      
-      $("form#post").submit();      
-    }    
+      $("form#post").submit();   
+    } else {      
+      $(".theme-trigger").show();
+      $(".theme-trigger-initial").hide();      
+      var url = "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id
+    	$.getJSON(url, function(data) {
+        var img = "<img src='/wp-content/plugins/cssmenumaker/menus/" + data.thumbnail + "' />";
+        $(".theme-trigger span").html(img);
+    	});      
+    }
+  });
+  
+  $("#filters .cats a").click(function(event){
+    $("#filters .cats li").removeClass('active');   
+    $(this).parent("li").addClass('active');
+    var classes = $(this).attr('class');
+    $("#theme-thumbs li").hide();
+    $("#theme-thumbs li." + classes).show();    
+  });
+  
+  
+  /***************/
+  /* Menu Options */
+  /***************/
+  
+  
+  $(".cssmenumaker-menu a").click(function(event){
+    event.preventDefault();
   });
   
   if($("#options-display").hasClass('step-2')) {
@@ -348,11 +392,13 @@ $(document).ready(function()
       $("#theme-options").hide();
       $("#menu-options").show();            
     }    
-  });
-  
+  });    
   $("select[name='cssmenu_structure']").change(function() {
     $("form#post").submit();
   });
+  
+  
+
 
 });
 
