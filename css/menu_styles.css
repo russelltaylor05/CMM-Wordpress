@@ -3,17 +3,45 @@
 .cssmenumaker-menu,
 .cssmenumaker-menu ul,
 .cssmenumaker-menu li,
-.cssmenumaker-menu span,
-.cssmenumaker-menu a {
+.cssmenumaker-menu li a,
+.cssmenumaker-menu li ul li,
+.cssmenumaker-menu li ul li a {
   margin: 0;
   padding: 0;
   border: 0;
   line-height: 1;
-  box-sizing: content-box;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;  
+  background: none;
+  width: auto;
+  float: none;
+  font-weight: normal;
+  height: auto;
+  text-align: left;
+  text-transform: none;
+
 }
+
+.cssmenumaker-menu a:after {
+  display: none;
+}
+
+.cssmenumaker-menu li:hover,
+.cssmenumaker-menu li a:hover,
+.cssmenumaker-menu li:hover a,
+.cssmenumaker-menu li li a:hover,
+.cssmenumaker-menu li li:hover a {
+  background: none;
+  border: none;
+  color: none;
+}
+
+
+
+.cssmenumaker-menu li.active,
+.cssmenumaker-menu a.active {background: none;}
+
 
 .cssmenumaker-menu ul ul {
   z-index: 1000;
