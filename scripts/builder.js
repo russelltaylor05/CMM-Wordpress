@@ -317,11 +317,11 @@ $(document).ready(function()
   }
 
 
+
   
-  
-  /*******************/
-  /* Theme Selection */
-  /******************/
+  /**************************/
+  /* Theme Selection/Change */
+  /**************************/
   
 	$("#theme-select-trigger").fancybox({
 		maxWidth	: 1100,
@@ -344,21 +344,33 @@ $(document).ready(function()
     event.preventDefault();
     theme_id = $(this).attr('data-id');
     $("input[name='cssmenu_theme_id']").val(theme_id);
-    $.fancybox.close();    
-    if($("input[name='cssmenu_step']").val() == 2) {
-      $("#cssmenu_js").val("");  
-      $("#cssmenu_css").val("");
-      $("#cssmenu_settings").val("");      
-      $("form#post").submit();   
-    } else {      
-      $(".theme-trigger").show();
-      $(".theme-trigger-initial").hide();      
-      var url = "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id
-    	$.getJSON(url, function(data) {
-        var img = "<img src='/wp-content/plugins/cssmenumaker/menus/" + data.thumbnail + "' />";
-        $(".theme-trigger span").html(img);
-    	});      
-    }
+
+    var post_id = $("input[name='post_ID']").val();
+  	var url = "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id;      
+  	$.getJSON(url, function(data) {
+      console.log(data);
+      data.post_id = post_id;      
+      var builder = new CSSMenuMaker(data, null);      
+      $("#cssmenu_settings").val(JSON.stringify(builder));
+
+      if($("input[name='cssmenu_step']").val() == 2) {
+        $("#cssmenu_js").val("");  
+        $("#cssmenu_css").val("");     
+        $("form#post").submit();
+        
+      } else {      
+        var url = "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id
+      	$.getJSON(url, function(data) {
+          var img = "<img src='/wp-content/plugins/cssmenumaker/menus/" + data.thumbnail + "' />";
+          $(".theme-trigger span").html(img);
+      	});
+        $(".theme-trigger").show();
+        $(".theme-trigger-initial").hide();
+      }
+
+    });      
+
+    $.fancybox.close();
   });
   
   $("#filters .cats a").click(function(event){
@@ -369,6 +381,18 @@ $(document).ready(function()
     $("#theme-thumbs li." + classes).show();    
   });
   
+  
+  $("#publish.step-1").click(function(event){
+    event.preventDefault();
+    if(!$("input[name='cssmenu_theme_id']").val()){
+      alert("Please select a theme before continuing");
+      return false;
+    } else {
+      $("form#post").submit();      
+      return true;
+    }
+  });
+
   
   /***************/
   /* Menu Options */

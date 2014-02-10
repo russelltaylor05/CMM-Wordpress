@@ -30,11 +30,13 @@ function CSSMenuMaker (defaultData, previousData)
   this.renderJquery = renderJquery; 
   this.getAllSettings = getAllSettings;
   this.jqueryStatus = 0;
+  this.depth = 0;
   
   if(defaultData) {
     this.css = defaultData.css;
     this.jquery = defaultData.jquery;
     this.themeId = defaultData.id;
+    this.depth = defaultData.depth;    
     this.postId = defaultData.post_id;  
     this.currentSettings = {};
     this.currentSettings = this.findCSSTags();
@@ -49,6 +51,7 @@ function CSSMenuMaker (defaultData, previousData)
     this.jquery = data.jquery;
     this.themeId = data.themeId;
     this.postId = data.postId;
+    this.depth = data.depth;    
     this.currentSettings = {};
     this.currentSettings = data.currentSettings;
   }

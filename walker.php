@@ -24,14 +24,22 @@ class CSS_Menu_Maker_Walker extends Walker {
     /* Add active class */
     if(in_array('current-menu-item', $classes)) {
       $classes[] = 'active';
-      unset($classes['current-menu-item']);
     }
+    if($item->menu_order == 1 && isset($_GET['action']) && isset($_GET['post'])) {
+      $classes[] = 'active';
+    }
+
+
     
     /* Check for children */
     $children = get_posts(array('post_type' => 'nav_menu_item', 'nopaging' => true, 'numberposts' => 1, 'meta_key' => '_menu_item_menu_item_parent', 'meta_value' => $item->ID));
     if (!empty($children)) {
       $classes[] = 'has-sub';
     }
+    
+    // print "<pre>";
+    // print_r($item);
+    // print "</pre>";    
     
     $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
     $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';

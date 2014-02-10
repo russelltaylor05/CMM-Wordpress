@@ -7,34 +7,28 @@ input[type='text'] {
   box-sizing: content-box; 
 }
 
-.wp-admin textarea {width: 100%; height: 250px; font-size: 12px;font-family: consolas, courier, monospace; font-size: 1em; line-height: 1.2em; white-space: pre;}
-
-
-#cssmenumaker_images input[type='file'] {padding: 2px; border: 1px solid #ccc; font-size: 13px;}
-
-.file-link {margin: 0 10px 0 0;}
-#edit-slug-box{display:none;}
-
-
-#help-page {padding: 20px; padding-left: 0;}
-#postbox-container-1 {display: none;}
-#poststuff #post-body.columns-2 {margin-right: 0;}
-#titlediv #title {width: 50%;}
-
-#cssmenumaker_menu_database {display: none;}
-
-
-#cssmenumaker_preview {padding: 0; background: none; border: none; box-shadow: none;}
-#cssmenumaker_preview .inside {margin: 0; padding: 0; border: 0;}
-#cssmenumaker_preview h3,
-#cssmenumaker_preview .handlediv {display: none;}
-
 
 .blue-button {height: 31px; padding: 0 10px; display: inline-block; line-height: 31px; background: #306ba1 url(../images/button_blue_bg.png) top left repeat-x; color: #fff; font-size: 14px; font-weight: 300; text-shadow: 0 -1px 1px #255581; border: 1px solid #1653ad;}
 .blue-button {-o-border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px;}
 .blue-button:hover {background: #326da2;}
 a.blue-button:link {color: #fff;}
 a.blue-button:visited {color: #fff;}
+
+
+#help-page {padding: 20px; padding-left: 0;}
+.wp-admin.post-type-cssmenu #postbox-container-1 {display: none;}
+.wp-admin.post-type-cssmenu #poststuff #post-body.columns-2 {margin-right: 0;}
+.wp-admin.post-type-cssmenu #titlediv #title {width: 50%;}
+.wp-admin.post-type-cssmenu #edit-slug-box {display:none;}
+
+.wp-admin.post-type-cssmenu textarea {width: 100%; height: 250px; font-size: 12px;font-family: consolas, courier, monospace; font-size: 1em; line-height: 1.2em; white-space: pre;}
+
+#cssmenumaker_menu_database {display: none;}
+
+#cssmenumaker_preview {padding: 0; background: none; border: none; box-shadow: none;}
+#cssmenumaker_preview .inside {margin: 0; padding: 0; border: 0;}
+#cssmenumaker_preview h3,
+#cssmenumaker_preview .handlediv {display: none;}
 
 
 #theme-select-overlay {padding: 0 0 0 200px; display: none;}

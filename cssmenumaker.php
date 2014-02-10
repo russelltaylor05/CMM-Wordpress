@@ -136,6 +136,7 @@ function cssmenumaker_print_menu($menu_id = 0)
     $wordpress_menu = get_post_meta($menu_id, "cssmenu_structure", true);
     $menu_css = get_post_meta($menu_id, "cssmenu_css", true);
     $menu_js = get_post_meta($menu_id, "cssmenu_js", true);    
+    $menu_settings = json_decode(get_post_meta( $cssmenu->ID, 'cssmenu_settings', true));    
 
     wp_nav_menu(array(
       'menu' => $wordpress_menu,
@@ -143,7 +144,8 @@ function cssmenumaker_print_menu($menu_id = 0)
       'container_class' => 'cssmenumaker-menu',
       'walker' => new CSS_Menu_Maker_Walker(),
       'menu_class' => '',
-      'menu_id' => '',      
+      'menu_id' => '',
+      'depth' => $menu_settings->depth,
     ));
 
     wp_enqueue_style('cssmenumaker-base-styles', plugins_url().'/cssmenumaker/css/menu_styles.css');

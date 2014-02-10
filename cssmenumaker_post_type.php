@@ -1,12 +1,5 @@
 <?php
 
-add_action('admin_head', 'cssmenumaker_admin_css');
-function cssmenumaker_admin_css() 
-{
-  print '<link rel="stylesheet" type="text/css" href="'.plugins_url().'/cssmenumaker/css/styles.css">';  
-}
-
-
 add_action( "init", "cssmenumaker_create_menu_post_type");
 function cssmenumaker_create_menu_post_type() 
 {
@@ -47,6 +40,9 @@ function cssmenumaker_create_menu_post_type()
 add_action('admin_init', 'cssmenumaker_admin_init');
 function cssmenumaker_admin_init()
 {
+  error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+  
   wp_enqueue_script("cssmenu-builder-structure", plugins_url().'/cssmenumaker/scripts/structure.js');    
   wp_enqueue_script("cssmenu-builder", plugins_url().'/cssmenumaker/scripts/builder.js');
   wp_enqueue_script("cssmenu-builder-less", plugins_url().'/cssmenumaker/scripts/less.js');
@@ -56,6 +52,7 @@ function cssmenumaker_admin_init()
   wp_enqueue_style('cssmenumaker-base-styles', plugins_url().'/cssmenumaker/css/menu_styles.css');  
   wp_enqueue_style('cssmenumaker-colorpicker', plugins_url().'/cssmenumaker/scripts/colorpicker/css/colorpicker.min.css');    
   wp_enqueue_style('cssmenumaker-fancybox', plugins_url().'/cssmenumaker/scripts/fancybox/jquery.fancybox.css');    
+  wp_enqueue_style('cssmenumaker-builder-styles', plugins_url().'/cssmenumaker/css/styles.css');   
   
   add_meta_box('cssmenumaker_menu_options', 'Menu Options','cssmenumaker_admin_menu_options','cssmenu', 'normal', 'high' );
   add_meta_box('cssmenumaker_preview', 'Preview', 'cssmenumaker_admin_menu_preview', 'cssmenu', 'normal' );
@@ -65,16 +62,19 @@ function cssmenumaker_admin_init()
 
 function cssmenumaker_admin_menu_preview($cssmenu)
 {
-  $cssmenu_structure = esc_html( get_post_meta( $cssmenu->ID, 'cssmenu_structure', true ) );
+  $cssmenu_structure = get_post_meta( $cssmenu->ID, 'cssmenu_structure', true );
+  $menu_settings = json_decode(get_post_meta( $cssmenu->ID, 'cssmenu_settings', true));
+
   if($cssmenu_structure) {
     print "<div id='menu-code'></div>";
     wp_nav_menu(array(
       'menu' => $cssmenu_structure,
       'container_id' => "cssmenu-{$cssmenu->ID}", 
       'container_class' => 'cssmenumaker-menu',
-      'walker' => new CSS_Menu_Maker_Walker(),
+      'walker' => new CSS_Menu_Maker_Walker('hello word'),
       'menu_class' => '',
-      'menu_id' => '',      
+      'menu_id' => '',   
+      'depth' => $menu_settings->depth,   
     ));
   } 
 }
@@ -152,11 +152,8 @@ function cssmenumaker_admin_menu_options($cssmenu)
   if($cssmenu_step == 2) {
     print '<input type="submit" name="publish" id="publish" class="button button-primary button-large" value="Save Menu" accesskey="p">';
   }  else {
-    print '<input type="submit" name="publish" id="publish" class="button button-primary button-large" value="Next" accesskey="p">';    
+    print '<input type="submit" name="publish" id="publish" class="button step-1 button-primary button-large" value="Next" accesskey="p">';    
   }
-
-  
-
   print "</div><!-- #options-display -->";  
    
   /* Theme Select Overlay */
@@ -171,9 +168,9 @@ function cssmenumaker_admin_menu_options($cssmenu)
   print "<li><a href='#' class='tabbed'>Tabbed</a></li>";  
   print "</ul>";
   print "<ul class='sub-cats cats'>";
+  print "<li><a href='#' class='responsive'>Responsive</a></li>";
   print "<li><a href='#' class='accordion'>Accordion</a></li>";
   print "<li><a href='#' class='jquery'>jQuery</a></li>";
-  print "<li><a href='#' class='responsive'>Responsive</a></li>";
   print "<li><a href='#' class='pure-css'>Pure CSS</a></li>";
   print "</ul>";
   print "</div>";
