@@ -10,10 +10,11 @@
  */
 
 define("IMAGE_CNT", 5);
+define("TRIAL", 0);
 
 
 /* Include Files */
-add_action( 'plugins_loaded', 'cssmenumaker_menu_load');
+add_action('plugins_loaded', 'cssmenumaker_menu_load');
 function cssmenumaker_menu_load()
 {  
   require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cssmenumaker_post_type.php');  
@@ -22,13 +23,11 @@ function cssmenumaker_menu_load()
 }
 
 
-
-
 /* 
  * Ajax callback for Dynamic CSS and jQuery 
  */
 add_action('wp_ajax_dynamic_css', 'dynaminc_css');
-add_action('wp_ajax_nopriv_dynamic_css', 'dynaminc_css');                     
+add_action('wp_ajax_nopriv_dynamic_css', 'dynaminc_css');
 function dynaminc_css() {
   require(dirname(__FILE__).DIRECTORY_SEPARATOR.'css/dynamic.css.php');
   exit;
@@ -65,13 +64,15 @@ function cssmenumaker_modify_nav_menu_args($args)
     $cssmenu_strucutre = get_post_meta( $available_menu->ID, 'cssmenu_structure', true );    
     $menu_css = get_post_meta($available_menu->ID, "cssmenu_css", true);
     $menu_js = get_post_meta($available_menu->ID, "cssmenu_js", true);    
+    $menu_settings = json_decode(get_post_meta( $available_menu->ID, 'cssmenu_settings', true)); 
     
-  	if ($cssmenu_location == $args['theme_location']) {      
+    if ($cssmenu_location == $args['theme_location']) {      
       $args['menu'] = $cssmenu_strucutre;
   		$args['container_id'] = "cssmenu-{$available_menu->ID}";
   		$args['container_class'] = "cssmenumaker-menu";
       $args['menu_class'] = '';
-      $args['menu_id'] = '';      
+      $args['menu_id'] = '';  
+      $args['depth'] = $menu_settings->depth;            
       $args['walker'] = new CSS_Menu_Maker_Walker();
 
       wp_enqueue_style( 'cssmenumaker-base-styles', plugins_url().'/cssmenumaker/css/menu_styles.css');
@@ -136,7 +137,7 @@ function cssmenumaker_print_menu($menu_id = 0)
     $wordpress_menu = get_post_meta($menu_id, "cssmenu_structure", true);
     $menu_css = get_post_meta($menu_id, "cssmenu_css", true);
     $menu_js = get_post_meta($menu_id, "cssmenu_js", true);    
-    $menu_settings = json_decode(get_post_meta( $cssmenu->ID, 'cssmenu_settings', true));    
+    $menu_settings = json_decode(get_post_meta( $menu_id, 'cssmenu_settings', true));    
 
     wp_nav_menu(array(
       'menu' => $wordpress_menu,
@@ -158,6 +159,24 @@ function cssmenumaker_print_menu($menu_id = 0)
 
 
 
+
+add_action( 'admin_notices', 'demo_notice' );
+function demo_notice() {
+
+  if(trial_check()) {
+      print "hello word";  
+  }
+  
+}
+
+
+/* 
+ * Returns true if trail is enabled
+ */
+function trial_check() {
+
+  return TRIAL;
+}
 
 
 
