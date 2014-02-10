@@ -101,5 +101,9 @@
 				</div><!-- /#menu-setting-form -->
 			</div></div><!-- /sub-menu-settings -->
 		</div><!-- /.panel -->
+    <div class='panel' id='custom-css' />
+      <h4>Custom CSS</h4>
+      <a id='custom-css-trigger' class="fancy-select" href='#custom-css-overlay'><span>Edit CSS</span></a>
+    </div><!-- /.panel -->
 	<div class='panel' id='panel-save-download'></div><!-- /.panel -->
 </div><!-- /#builder-settings-panel -->

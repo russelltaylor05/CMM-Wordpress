@@ -29,7 +29,7 @@ function previewMenu(builder)
     var menu_class = 'align-' + builder.currentSettings['menu_align'];
   } else {
     var menu_class = '';
-  }
+  }  
   builder.currentSettings['menuClass'] = "#cssmenu-" + builder.postId;
   builder.currentSettings['includePath'] = "/wp-content/plugins/cssmenumaker/menus/" + builder.themeId + "/images/";            
   
@@ -42,7 +42,6 @@ function previewMenu(builder)
  	});
   
   /* jQuery */
-
   if(builder.jquery) {
 
     jquerySettings['menuClass'] = builder.currentSettings['menuClass'];    
@@ -84,11 +83,6 @@ function initSettings(callback, builder)
 	for(setting in availSettings) {
 		if(setting in allSettings) {
       $("input[name='" + setting + "'], select[name='" + setting + "']").val(builder.currentSettings[setting]);	
-      // if(builder.currentSettings[setting]) { // DB Value
-      //         $("input[name='" + setting + "'], select[name='" + setting + "']").val(builder.currentSettings[setting]);    
-      // } else { // Default Value
-      //   $("input[name='" + setting + "'], select[name='" + setting + "']").val(removeUnits(availSettings[setting], setting));  
-      // }        
 		}	
 	}
   
@@ -151,13 +145,14 @@ function setSettings(availSettings, allSettings, builder)
       onChange: function (hsb, hex, rgb) {
       	$("#menu-color .trigger span").css('backgroundColor', '#' + hex);
 				$("#menu-color input").val("#" + hex);
+        previewMenu(builder);
       },
-			onSubmit: function(hsb, hex, rgb) {
+			onSubmit: function(hsb, hex, rgb) {				
+        previewMenu(builder);
+			},
+      onHide: function (colpkr) {				
 				previewMenu(builder);
 			},
-      onHide: function (colpkr) {
-				previewMenu(builder);
-			},			
 		});				
 	} else {
 		$("#menu-color").hide();
@@ -175,7 +170,7 @@ function setSettings(availSettings, allSettings, builder)
 			color	: color,
       onChange: function (hsb, hex, rgb) {
       	preview.find(".trigger span").css('backgroundColor', '#' + hex);
-				preview.find("input").val("#" + hex);
+				preview.find("input").val("#" + hex);       
       }
 		}); 
 	});
@@ -213,6 +208,27 @@ function setSettings(availSettings, allSettings, builder)
 
 function settingsFunctionality(builder) 
 {
+  
+  
+  /* Custom CSS */
+	$("#custom-css-trigger").fancybox({
+		maxWidth	: 600,
+		fitToView	: false,
+		width		: '80%',
+		height		: 'auto',
+		autoSize	: false,
+		closeClick	: false,
+		openEffect	: 'none',
+		closeEffect	: 'none'
+	});
+  $("#custom-css-overlay a").click(function(e){
+    builder.customCSS = $("#cssmenu_custom_css").val();
+    e.preventDefault();
+    $.fancybox.close();
+    previewMenu(builder);
+  });
+  
+  
 	/* Settings Overlays */
 	$("#menu-settings-trigger").click(function(event){
 		event.preventDefault();
@@ -230,6 +246,17 @@ function settingsFunctionality(builder)
 			cancelBehavior(settings, $("#sub-menu-settings-overlay"));
 		}		 
 	});
+  
+  $("#sub-menu-settings-overlay, #sub-menu-settings-trigger").click(function(e) {
+    e.stopPropagation(); 
+  });  
+  $("#menu-settings-overlay, #menu-settings-trigger").click(function(e) {
+    e.stopPropagation(); 
+  });  
+  $(document).click(function(){  
+    $("#sub-menu-settings-overlay").hide();
+    $("#menu-settings-overlay").hide();    
+  }); 
 
 	 $("a.cancel").click(function(event){
 		 event.preventDefault();
@@ -348,7 +375,7 @@ $(document).ready(function()
     var post_id = $("input[name='post_ID']").val();
   	var url = "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id;      
   	$.getJSON(url, function(data) {
-      console.log(data);
+
       data.post_id = post_id;      
       var builder = new CSSMenuMaker(data, null);      
       $("#cssmenu_settings").val(JSON.stringify(builder));

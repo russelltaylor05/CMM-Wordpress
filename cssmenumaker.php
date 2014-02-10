@@ -59,6 +59,7 @@ function cssmenumaker_modify_nav_menu_args($args)
   $available_menus = get_posts(array("post_type" => "cssmenu"));  
   $registerd_locations = get_registered_nav_menus();
   
+
   foreach($available_menus as $id => $available_menu) {
     $cssmenu_location = get_post_meta( $available_menu->ID, 'cssmenu_location', true );
     $cssmenu_strucutre = get_post_meta( $available_menu->ID, 'cssmenu_structure', true );    
@@ -67,6 +68,7 @@ function cssmenumaker_modify_nav_menu_args($args)
     $menu_settings = json_decode(get_post_meta( $available_menu->ID, 'cssmenu_settings', true)); 
     
     if ($cssmenu_location == $args['theme_location']) {      
+
       $args['menu'] = $cssmenu_strucutre;
   		$args['container_id'] = "cssmenu-{$available_menu->ID}";
   		$args['container_class'] = "cssmenumaker-menu";
@@ -160,13 +162,15 @@ function cssmenumaker_print_menu($menu_id = 0)
 
 
 
-add_action( 'admin_notices', 'demo_notice' );
+add_action('admin_notices', 'demo_notice' );
 function demo_notice() {
-
-  if(trial_check()) {
-      print "hello word";  
+  $screen = get_current_screen();
+  if($screen->id == 'edit-cssmenu') {
+    print "<div class='error'>";
+    print "<h3>Beta Testing</h3>";
+    print "<p>This plugin is currently in beta testing. Please take the time to <a style='text-decoration: underline;' href='http://cssmenumaker.com/wordpress-plugin-support'>let us know</a> if you run into any issues or have any questions.</p>";
+    print "</div>";    
   }
-  
 }
 
 

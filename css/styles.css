@@ -7,6 +7,7 @@ input[type='text'] {
   box-sizing: content-box; 
 }
 
+span.code {padding: 3px; font-family: consolas, courier, monospace; background: #fff7b1;}
 
 .blue-button {height: 31px; padding: 0 10px; display: inline-block; line-height: 31px; background: #306ba1 url(../images/button_blue_bg.png) top left repeat-x; color: #fff; font-size: 14px; font-weight: 300; text-shadow: 0 -1px 1px #255581; border: 1px solid #1653ad;}
 .blue-button {-o-border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px;}
@@ -20,7 +21,7 @@ a.blue-button:visited {color: #fff;}
 .wp-admin.post-type-cssmenu #poststuff #post-body.columns-2 {margin-right: 0;}
 .wp-admin.post-type-cssmenu #titlediv #title {width: 50%;}
 .wp-admin.post-type-cssmenu #edit-slug-box {display:none;}
-.wp-admin.post-type-cssmenu textarea {width: 100%; height: 250px; font-size: 12px;font-family: consolas, courier, monospace; font-size: 1em; line-height: 1.2em; white-space: pre;}
+.wp-admin.post-type-cssmenu textarea {width: 100%; height: 250px; font-size: 12px; font-family: consolas, courier, monospace; font-size: 1em; line-height: 1.2em; white-space: pre;}
 
 .wp-admin #add-cssmenu {display: none;}
 
@@ -32,8 +33,7 @@ a.blue-button:visited {color: #fff;}
 #cssmenumaker_preview h3,
 #cssmenumaker_preview .handlediv {display: none;}
 
-
-#theme-select-overlay {padding: 0 0 0 200px; display: none;}
+#theme-select-overlay {padding: 0 0 0 200px; display: none; }
 #theme-thumbs li {margin: 0 10px 10px 0; padding: 5px; float: left; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3); border-radius: 2px;}
 #theme-thumbs li a {width: 200px; height: 100px; margin: 0; display: block; overflow: hidden;}
 #theme-thumbs li img {margin: 0; padding: 0; border: 0;}
@@ -115,6 +115,9 @@ a:visited.fancy-select {color: #666666;}
 #sub-menu-settings-trigger {width: 125px;}
 #menu-settings-trigger {margin: 0 0 5px 0; }
 #sub-menu-settings-trigger {margin: 0;}
+
+#custom-css-trigger span {background: url(../images/icon_setting_select.png) center right no-repeat;}
+#custom-css-overlay textarea {height: 400px; margin: 0 0 15px 0;}
 
 .settings-overlay {width: 250px; padding: 15px; background: #fff; position: absolute; top: 79px; left: -60px; display: none; z-index: 998; box-shadow: 0 0 6px rgba(0,0,0,.4); border-radius: 3px;}
 .settings-overlay > div {position: relative;}

@@ -31,13 +31,14 @@ function CSSMenuMaker (defaultData, previousData)
   this.getAllSettings = getAllSettings;
   this.jqueryStatus = 0;
   this.depth = 0;
-  
+  this.customCSS = "";
+;  
   if(defaultData) {
     this.css = defaultData.css;
     this.jquery = defaultData.jquery;
     this.themeId = defaultData.id;
-    this.depth = defaultData.depth;    
-    this.postId = defaultData.post_id;  
+    this.depth = defaultData.depth;
+    this.postId = defaultData.post_id;    
     this.currentSettings = {};
     this.currentSettings = this.findCSSTags();
     for(tag in this.currentSettings) {
@@ -52,6 +53,7 @@ function CSSMenuMaker (defaultData, previousData)
     this.themeId = data.themeId;
     this.postId = data.postId;
     this.depth = data.depth;    
+    this.customCSS = data.customCSS;
     this.currentSettings = {};
     this.currentSettings = data.currentSettings;
   }
@@ -119,6 +121,11 @@ function renderCSS()
   output = output.replace(/\[\[menu_class\]\]/ig, params.menuClass);   
   output = output.replace(/#include_path#/ig, params.includePath);
   output = output.replace(/\[\[include_path\]\]/ig, params.includePath);   
+
+  if(this.customCSS) {
+    output += this.customCSS;
+  }
+
   return output;
 }
 

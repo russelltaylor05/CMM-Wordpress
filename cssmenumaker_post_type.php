@@ -159,7 +159,7 @@ function cssmenumaker_admin_menu_options($cssmenu)
   /* Theme Select Overlay */
   print "<div id='theme-select-overlay'><div class='container'>";
   print "<div id='filters'>";
-  print "<h4>Filters</h4>";  
+  print "<h4>Menu Themes</h4>";  
   print "<ul class='main-cats cats'>";
   print "<li><a href='#' class='drop-down'>Drop Down</a></li>";
   print "<li><a href='#' class='flyout'>Flyout</a></li>";
@@ -193,6 +193,7 @@ function cssmenumaker_admin_menu_database($cssmenu)
   $cssmenu_css = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_css', true ) );
   $cssmenu_js = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_js', true ) );
   $cssmenu_settings = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_settings', true ) );
+  $cssmenu_custom_css = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_custom_css', true ) );  
   
   print "<label>CSS</label>";
   print '<textarea name="cssmenu_css" id="cssmenu_css">'.$cssmenu_css."</textarea>";
@@ -200,6 +201,13 @@ function cssmenumaker_admin_menu_database($cssmenu)
   print '<textarea name="cssmenu_js" id="cssmenu_js">'.$cssmenu_js."</textarea>";
   print "<label>Settings</label>";
   print '<textarea name="cssmenu_settings" id="cssmenu_settings">'.$cssmenu_settings."</textarea>";  
+  print "<div id='custom-css-overlay'>";
+  print "<h2>Custom CSS</h2>";
+  print "<p>If you would like to create your own CSS styles for this menu, this is the place to do it. The ID for this menu is <span class='code'>#cssmenu-{$cssmenu->ID}</span>. Use this ID in your code below to apply custom CSS styles.</p>";
+  print '<textarea name="cssmenu_custom_css" id="cssmenu_custom_css">'.$cssmenu_custom_css."</textarea>";  
+  print "<a href='#' class='button-primary'>Save</a>";
+  print "</div>";
+
   
 }
 
@@ -227,6 +235,9 @@ function cssmenumaker_post_save($cssmenu_id, $cssmenu )
     }
     if (isset($_POST['cssmenu_theme_id'])) {
       update_post_meta($cssmenu_id, 'cssmenu_theme_id', $_POST['cssmenu_theme_id'] );
+    }
+    if (isset($_POST['cssmenu_custom_css'])) {
+      update_post_meta($cssmenu_id, 'cssmenu_custom_css', $_POST['cssmenu_custom_css'] );
     }
     if (isset($_POST['cssmenu_step'])) {
       update_post_meta($cssmenu_id, 'cssmenu_step', 2 );
@@ -257,28 +268,22 @@ function cssmenumaker_template_include ($template_path)
 }
 
 
+
 /* 
  * Help Page
  */
 add_action('admin_menu', 'cssmenumake_menu_help');
-function cssmenumake_menu_help() {
-
-
+function cssmenumake_menu_help() 
+{
 	add_submenu_page('edit.php?post_type=cssmenu', 
                     'CSS MenuMaker Help', 
                     'Help', 'manage_options', 'cssmenu-help', 
                     'cssmenumaker_help_page');
 }
 function cssmenumaker_help_page() 
-{?>
-  <div id="help-page">
-    <h1>Plugin Help</h1>
-    <p>This wordpress plugin is brand new so we are looking to gather feedback from our users. 
-       If you are having problems using the Plugin, please take a moment to submit a ticket and 
-       let us know what problems you are running into.</p>
-       <p><a href="http://cssmenumaker.com/wordpress-plugin-support" target="_blank" class="button-primary">Submit Ticket</a></p>
-  </div>
-<?php }
+{
+  require(dirname(__FILE__).DIRECTORY_SEPARATOR.'help.inc');
+}
 
 
 

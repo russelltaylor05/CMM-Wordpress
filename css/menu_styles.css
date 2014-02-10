@@ -23,6 +23,12 @@
 
 }
 
+.cssmenumaker-menu,
+.cssmenumaker-menu ul,
+.cssmenumaker-menu li,
+  display: block;
+}
+
 .cssmenumaker-menu a:after {
   display: none;
 }

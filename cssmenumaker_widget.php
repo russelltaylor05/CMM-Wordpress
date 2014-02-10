@@ -10,7 +10,7 @@ function cssmenumaker_create_widgets() {
 class CSS_MenuMaker extends WP_Widget {
   // Construction function
   function __construct ()  {  
-    parent::__construct( 'cssmenu_widget', 'CSS MenuMaker', array( 'description' => 'Display a Menu built with CSS MenuMaker' ));            
+    parent::__construct( 'cssmenu_widget', 'MenuMaker', array( 'description' => 'Display a Menu built with MenuMaker' ));            
   }
   
   function form($instance) {
