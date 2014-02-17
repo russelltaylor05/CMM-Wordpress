@@ -60,24 +60,20 @@ function cssmenumaker_admin_init()
   
 }
 
+
+
+
 function cssmenumaker_admin_menu_preview($cssmenu)
 {
   $cssmenu_structure = get_post_meta( $cssmenu->ID, 'cssmenu_structure', true );
-  $menu_settings = json_decode(get_post_meta( $cssmenu->ID, 'cssmenu_settings', true));
-
   if($cssmenu_structure) {
-    print "<div id='menu-code'></div>";
-    wp_nav_menu(array(
-      'menu' => $cssmenu_structure,
-      'container_id' => "cssmenu-{$cssmenu->ID}", 
-      'container_class' => 'cssmenumaker-menu',
-      'walker' => new CSS_Menu_Maker_Walker(),
-      'menu_class' => '',
-      'menu_id' => '',   
-      'depth' => $menu_settings->depth,   
-    ));
-  } 
+    print "<div id='menu-code'></div>";    
+    wp_nav_menu(array('cssmenumaker_id' => $cssmenu->ID, 'cssmenumaker_flag' => true));  
+  }
 }
+
+
+
 
 
 /* Display Menu Options */
@@ -123,6 +119,11 @@ function cssmenumaker_admin_menu_options($cssmenu)
   print "<p class='help'>Print your menu inside another post with this shortcode.</p>";  
   print "<p><input type='text' value='[cssmenumaker id=\"".$cssmenu->ID."\"]' /></p>";  
   print "</div><!-- .panel -->";  
+  print "<div class='panel php'>";
+  print '<h4>PHP</h4>';
+  print "<p class='help'>Use PHP to display your menu in a theme file.</p>";  
+  print "<p><input type='text' value='<?php print cssmenumaker_print_menu(".$cssmenu->ID."); ?>' /></p>";  
+  print "</div><!-- .panel -->";
   print "</div><!-- #menu-options -->";
   
 
@@ -282,19 +283,18 @@ function cssmenumaker_template_include ($template_path)
 
 
 
+
 /* 
  * Help Page
  */
 add_action('admin_menu', 'cssmenumake_menu_help');
-function cssmenumake_menu_help() 
-{
+function cssmenumake_menu_help()  {
 	add_submenu_page('edit.php?post_type=cssmenu', 
                     'CSS MenuMaker Help', 
                     'Help', 'manage_options', 'cssmenu-help', 
                     'cssmenumaker_help_page');
 }
-function cssmenumaker_help_page() 
-{
+function cssmenumaker_help_page()  {
   require(dirname(__FILE__).DIRECTORY_SEPARATOR.'help.inc');
 }
 

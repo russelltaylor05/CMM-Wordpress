@@ -30,7 +30,7 @@ class CSS_MenuMaker extends WP_Widget {
   
   function widget($args, $instance) 
   {
-    cssmenumaker_print_menu($instance['selected_menu']);    
+    cssmenumaker_print_menu($instance['selected_menu']);      
   }  
 }
 

@@ -86,13 +86,18 @@ a:visited.fancy-select {color: #666666;}
 .step-1 .panel.structure h4 {margin-top: 0;}
 .step-1 .location,
 .step-1 .shortcode,
-.step-1 .widget {display: none;}
-.shortcode input {width: 90%; padding: 5px 10px; font-size: 13px; font-family: consolas, courier, monospace; }
+.step-1 .widget,
+.step-1 .php {display: none;}
+.shortcode input,
+.php input {width: 90%; padding: 5px 10px; font-size: 13px; font-family: consolas, courier, monospace; }
 
 .step-2 .structure .help {display: none;}
 .step-2 .panel {float: left;}
-#menu-options .panel {margin: 0 0 0 5%; padding: 0; width: 30%;}
+#menu-options {display: none;}
+#menu-options .panel {margin: 0 0 5% 5%; padding: 0; width: 45%;}
 #menu-options .panel.location {margin: 0;}
+#menu-options .panel.shortcode {margin: 0; clear: left;}
+#menu-options .panel.php {margin-bottom: 0;}
 .step-2 #builder-settings-panel {padding: 0; margin: 0;}
 .step-2 #menu-options,
 .step-2 #theme-options {padding: 20px; border: 1px solid #efefef; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3);}
