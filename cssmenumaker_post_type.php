@@ -71,7 +71,7 @@ function cssmenumaker_admin_menu_preview($cssmenu)
       'menu' => $cssmenu_structure,
       'container_id' => "cssmenu-{$cssmenu->ID}", 
       'container_class' => 'cssmenumaker-menu',
-      'walker' => new CSS_Menu_Maker_Walker('hello word'),
+      'walker' => new CSS_Menu_Maker_Walker(),
       'menu_class' => '',
       'menu_id' => '',   
       'depth' => $menu_settings->depth,   
@@ -96,24 +96,12 @@ function cssmenumaker_admin_menu_options($cssmenu)
 
   $classes = ($cssmenu_step == 2) ? "step-2" : "step-1";
   print "<div id='options-display' class='".$classes."'>";  
-  print "<ul id='option-toggle' class='clearfix'><li><a href='#theme' class='active'>Theme Options</a></li><li><a href='#menu'>Menu Options</a></li></ul>";
+  print "<ul id='option-toggle' class='clearfix'><li><a href='#theme' class='active'>Menu Options</a></li><li><a href='#menu'>Display Options</a></li></ul>";
   print "<div id='menu-options' class='option-pane clearfix'>";
-  print "<div class='panel structure'>";
-  print '<h4>Menu Structure</h4>';
-  print "<p class='help'>Select a Wordpress menu you would like to use as the structure.</p>";
-  print '<select name="cssmenu_structure">';
-  foreach($wordpress_menus as $id => $menu) {
-    print '<option value="'.$menu->slug.'"';
-    print selected( $menu->slug, $cssmenu_structure ).'>';
-    print $menu->name;
-    print "</option>";
-  }
-  print " </select>";
-  print "</div><!-- .panel -->";  
 
   print "<div class='panel location'>";
   print '<h4>Menu Location</h4>';
-  print "<p class='help'>Select a theme location to display your menu. Leave blank if you plan on using this menu as a Widget or Shortcode.</p>";  
+  print "<p class='help'>Select a theme location to display your menu.</p>";  
   print '<select name="cssmenu_location">';  
   print "<option>< blank ></option>";
   $registerd_locations = get_registered_nav_menus();  
@@ -125,10 +113,35 @@ function cssmenumaker_admin_menu_options($cssmenu)
   }
   print " </select>";  
   print "</div><!-- .panel -->";  
+  print "<div class='panel widget'>";
+  print '<h4>Widgets</h4>';
+  print "<p class='help'>Use the MenuMaker widget to display your menu in a widget region.</p>";  
+  print "<a href='/wp-admin/widgets.php'>Go to Widgets</a>";
+  print "</div><!-- .panel -->";  
+  print "<div class='panel shortcode'>";
+  print '<h4>Shortcodes</h4>';
+  print "<p class='help'>Print your menu inside another post with this shortcode.</p>";  
+  print "<p><input type='text' value='[cssmenumaker id=\"".$cssmenu->ID."\"]' /></p>";  
+  print "</div><!-- .panel -->";  
   print "</div><!-- #menu-options -->";
   
 
   print "<div id='theme-options' class='option-pane clearfix'>";
+
+  print "<div class='panel structure'>";
+  print '<h4>Structure</h4>';
+  print "<p class='help'>Select a Wordpress menu you would like to customize with MenuMaker.</p>";
+  print '<select name="cssmenu_structure">';
+  foreach($wordpress_menus as $id => $menu) {
+    print '<option value="'.$menu->slug.'"';
+    print selected( $menu->slug, $cssmenu_structure ).'>';
+    print $menu->name;
+    print "</option>";
+  }
+  print " </select>";
+  print "</div><!-- .panel -->";  
+
+
   print "<div class='panel'>";
   print '<h4>Theme</h4>';  
   print "<input type='hidden' name='cssmenu_theme_id' value='".$cssmenu_theme_id."' />";

@@ -443,9 +443,12 @@ $(document).ready(function()
       $("#theme-options").hide();
       $("#menu-options").show();            
     }    
-  });    
+  });
+      
   $("select[name='cssmenu_structure']").change(function() {
-    $("form#post").submit();
+    if($("#options-display").hasClass('step-2')) {
+      $("form#post").submit();
+    }    
   });
   
   

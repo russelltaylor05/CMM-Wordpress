@@ -14,6 +14,6 @@
   <p>After you have created your menu head over to your <a href="/wp-admin/widgets.php">Wordpress Widgets</a>. On the left hand side you should see the MenuMaker widget. Drag and drop the MenuMaker widget to your desired Widget area. Once you have done this you will see a select list that contains all the menus you have created using MenuMaker. Choose one and then click save.</p>
 
   <h3>Method 3: Shortcode</h3>
-  <p>Shortcodes allow you to print out your menu wherever you want. On the main MenuMaker screen you will see a table of all the menus you have created.  The second column of this table contains the shortcode for each menu. Copy and paste this shortcode into any post and your menu will be printed there.</p> 
+  <p>Shortcodes allow you to print out your menu wherever you want. On the <a href="/wp-admin/edit.php?post_type=cssmenu"> main MenuMaker screen</a> you will see a table of all the menus you have created.  The second column of this table contains the shortcode for each menu. Copy and paste this shortcode into any post and your menu will be printed there.</p> 
 
 </div>
