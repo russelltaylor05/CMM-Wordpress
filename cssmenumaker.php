@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: CSS MenuMaker
- * Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
+ * Plugin URI: http://cssmenumaker.com/wordpress-menu-plugin
  * Description: CSS MenuMaker
  * Version: 1.0
  * Author: CSS MenuMaker
- * Author URI: http://URI_Of_The_Plugin_Author
+ * Author URI: http://cssmenumaker.com/wordpress-menu-plugin
  * License: A "Slug" license name e.g. GPL2
  */
 
@@ -19,7 +19,6 @@ function cssmenumaker_menu_load()
   require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cssmenumaker_widget.php');
   require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'walker.php');  
 }
-
 
 
 /* 
@@ -217,7 +216,6 @@ function demo_notice() {
 /* 
  * Returns true if software should be in demo mode
  */
-$unlock = Array(0,0,1,0,0);
 function demo_check() {
   return TRIAL;
 }

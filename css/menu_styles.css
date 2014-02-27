@@ -31,7 +31,7 @@
 }
 
 .cssmenumaker-menu a:after {
-  display: none;
+
 }
 
 .cssmenumaker-menu li:hover,
@@ -43,8 +43,6 @@
   border: none;
   color: none;
 }
-
-
 
 .cssmenumaker-menu li.active,
 .cssmenumaker-menu a.active {background: none;}

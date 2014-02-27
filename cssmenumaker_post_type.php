@@ -39,10 +39,7 @@ function cssmenumaker_create_menu_post_type()
 
 add_action('admin_init', 'cssmenumaker_admin_init');
 function cssmenumaker_admin_init()
-{
-  error_reporting(E_ALL);
-  ini_set('display_errors', 1);
-  
+{  
   wp_enqueue_script("cssmenu-builder-structure", plugins_url().'/cssmenumaker/scripts/structure.js');    
   wp_enqueue_script("cssmenu-builder", plugins_url().'/cssmenumaker/scripts/builder.js');
   wp_enqueue_script("cssmenu-builder-less", plugins_url().'/cssmenumaker/scripts/less.js');
