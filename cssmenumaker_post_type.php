@@ -4,8 +4,8 @@ add_action( "init", "cssmenumaker_create_menu_post_type");
 function cssmenumaker_create_menu_post_type() 
 {
   $labels = array(
-    'name'               => 'CSS MenuMaker',
-    'singular_name'      => 'CSS MenuMaker',
+    'name'               => 'MenuMaker',
+    'singular_name'      => 'MenuMaker',
     'add_new'            => 'Add New',
     'add_new_item'       => 'Add New Menu',
     'edit_item'          => 'Edit Menu',
