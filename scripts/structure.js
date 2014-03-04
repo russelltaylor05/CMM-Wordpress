@@ -32,7 +32,7 @@ function CSSMenuMaker (defaultData, previousData)
   this.jqueryStatus = 0;
   this.depth = 0;
   this.customCSS = "";
-;  
+    
   if(defaultData) {
     this.css = defaultData.css;
     this.jquery = defaultData.jquery;

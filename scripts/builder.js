@@ -322,7 +322,7 @@ $(document).ready(function()
 
   var theme_id = $("input[name='cssmenu_theme_id']").val();
   var post_id = $("input[name='post_ID']").val();
-	var url = "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id;
+  var url = cssmenu_global.root_url + "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id;
   var previousData = $("textarea[name='cssmenu_settings']").val();
 
   if(previousData) {
@@ -373,7 +373,7 @@ $(document).ready(function()
     $("input[name='cssmenu_theme_id']").val(theme_id);
 
     var post_id = $("input[name='post_ID']").val();
-  	var url = "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id;      
+  	var url = cssmenu_global.root_url + "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id;      
   	$.getJSON(url, function(data) {
 
       data.post_id = post_id;      
@@ -386,9 +386,9 @@ $(document).ready(function()
         $("form#post").submit();
         
       } else {      
-        var url = "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id
+        var url = cssmenu_global.root_url + "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id
       	$.getJSON(url, function(data) {
-          var img = "<img src='/wp-content/plugins/cssmenumaker/menus/" + data.thumbnail + "' />";
+          var img = "<img src='" + cssmenu_global.root_url + "/wp-content/plugins/cssmenumaker/menus/" + data.thumbnail + "' />";
           $(".theme-trigger span").html(img);
       	});
         $(".theme-trigger").show();
