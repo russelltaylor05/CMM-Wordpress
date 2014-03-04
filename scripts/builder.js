@@ -31,7 +31,7 @@ function previewMenu(builder)
     var menu_class = '';
   }  
   builder.currentSettings['menuClass'] = "#cssmenu-" + builder.postId;
-  builder.currentSettings['includePath'] = "/wp-content/plugins/cssmenumaker/menus/" + builder.themeId + "/images/";            
+  builder.currentSettings['includePath'] = cssmenu_global.root_url + "/wp-content/plugins/cssmenumaker/menus/" + builder.themeId + "/images/";            
   
 	var renderedCSS = builder.renderCSS();
  	parser.parse(renderedCSS, function (err, tree) {
