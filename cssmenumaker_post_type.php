@@ -12,7 +12,7 @@ function cssmenumaker_create_menu_post_type()
     'new_item'           => 'New Menu',
     'all_items'          => 'All Menus',
     'view_item'          => 'View Menu',
-    'search_items'       => 'Search Books',
+    'search_items'       => 'Search Menus',
     'not_found'          => 'No menus found',
     'not_found_in_trash' => 'No menus found in Trash',
     'parent_item_colon'  => '',
