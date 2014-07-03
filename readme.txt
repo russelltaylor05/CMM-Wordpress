@@ -7,6 +7,8 @@ License: GPLv2 or later
 Stable tag: trunk
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+MenuMaker provides a library of menu templates to use and customize that will integrate with existing Wordpress menus.
+
 == Description ==
 
 MenuMaker allows you to create beautiful, dynamic navigations. MenuMaker integrates seamlessly with the Wordpress menu system and provides a number menu templates and customization options.

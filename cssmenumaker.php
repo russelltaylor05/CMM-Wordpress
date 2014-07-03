@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: CSS MenuMaker
- * Plugin URI: http://cssmenumaker.com/wordpress-menu-plugin
- * Description: CSS MenuMaker
+ * Plugin URI: http://cssmenumaker.com/
+ * Description: Wordpress Plugin to build dynamic, responsive menus.
  * Version: 1.1.1
- * Author: CSS MenuMaker
- * Author URI: http://cssmenumaker.com/wordpress-menu-plugin
- * License: A "Slug" license name e.g. GPL2
+ * Author: cssmenumaker
+ * Author URI: http://cssmenumaker.com/
+ * License: GPL2
  */
 
 define("TRIAL", 0);
