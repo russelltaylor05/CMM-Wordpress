@@ -141,20 +141,26 @@ function setSettings(availSettings, allSettings, builder)
 	if(availSettings['main_color']) {	
 		var color = $("#menu-color input[name='main_color']").val();		
 		$("#menu-color .trigger span").css('backgroundColor', color);				
-		$("#menu-color .trigger").ColorPicker({
-			color	: color,
-      onChange: function (hsb, hex, rgb) {
-      	$("#menu-color .trigger span").css('backgroundColor', '#' + hex);
-				$("#menu-color input").val("#" + hex);
-        previewMenu(builder);
-      },
-			onSubmit: function(hsb, hex, rgb) {				
-        previewMenu(builder);
-			},
-      onHide: function (colpkr) {				
-				previewMenu(builder);
-			},
-		});				
+
+    $("#menu-color .trigger").spectrum({
+        color: color,
+        showInput: true,
+        showInitial: true,
+        preferredFormat: "hex",
+        move: function(color) {
+            var hex = color.toHexString(); // #ff0000
+            $("#menu-color .trigger span").css('backgroundColor', hex);
+            $("#menu-color input").val(hex);  
+            previewMenu(builder);
+        },
+        change: function(color) {
+            var hex = color.toHexString(); // #ff0000
+            $("#menu-color .trigger span").css('backgroundColor', hex);
+            $("#menu-color input").val(hex);  
+            previewMenu(builder);
+        }
+    });
+
 	} else {
 		$("#menu-color").hide();
 	}
@@ -167,13 +173,36 @@ function setSettings(availSettings, allSettings, builder)
 		var preview =  $(this);
 		
 		$(this).find(".trigger span").css('backgroundColor', color);		
-		$(this).children(".trigger").ColorPicker({
-			color	: color,
-      onChange: function (hsb, hex, rgb) {
-      	preview.find(".trigger span").css('backgroundColor', '#' + hex);
-				preview.find("input").val("#" + hex);       
-      }
-		}); 
+
+    $(this).children(".trigger").spectrum({
+        color: color,
+        showInput: true,
+        showInitial: true,
+        preferredFormat: "hex",
+        move: function(color) {
+            var hex = color.toHexString(); // #ff0000
+            preview.find(".trigger span").css('backgroundColor', hex);
+            preview.find("input").val(hex);  
+        },
+        change: function(color) {
+            var hex = color.toHexString(); // #ff0000
+            preview.find(".trigger span").css('backgroundColor', hex);
+            preview.find("input").val(hex);
+            previewMenu(builder);            
+        }
+    });    
+
+
+
+    // $(this).children(".trigger").ColorPicker({
+    //   color  : color,
+    //       onChange: function (hsb, hex, rgb) {
+    //         preview.find(".trigger span").css('backgroundColor', '#' + hex);
+    //     preview.find("input").val("#" + hex);
+    //       }
+    // });
+
+
 	});
 
 	/* Hide inactive settings */
