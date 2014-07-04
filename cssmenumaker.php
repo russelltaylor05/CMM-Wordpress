@@ -3,7 +3,7 @@
  * Plugin Name: CSS MenuMaker
  * Plugin URI: http://cssmenumaker.com/
  * Description: Wordpress Plugin to build dynamic, responsive menus.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: cssmenumaker
  * Author URI: http://cssmenumaker.com/
  * License: GPL2

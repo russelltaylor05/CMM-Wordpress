@@ -43,14 +43,14 @@ function cssmenumaker_admin_init()
   wp_enqueue_script("cssmenu-builder-structure", plugins_url().'/cssmenumaker/scripts/structure.js');    
   wp_enqueue_script("cssmenu-builder", plugins_url().'/cssmenumaker/scripts/builder.js');
   wp_enqueue_script("cssmenu-builder-less", plugins_url().'/cssmenumaker/scripts/less.js');
-  wp_enqueue_script("cssmenu-builder-colorpicker", plugins_url().'/cssmenumaker/scripts/colorpicker/colorpicker.min.js');  
+  wp_enqueue_script("cssmenu-builder-spectrum", plugins_url().'/cssmenumaker/scripts/spectrum/spectrum.js'); 
   wp_enqueue_script("cssmenu-builder-fancybox", plugins_url().'/cssmenumaker/scripts/fancybox/jquery.fancybox.pack.js');  
 
   $data_array = array( 'plugin_url' => plugins_url(), 'root_url' => get_site_url());
   wp_localize_script( 'cssmenu-builder-structure', 'cssmenu_global', $data_array);
 
   wp_enqueue_style('cssmenumaker-base-styles', plugins_url().'/cssmenumaker/css/menu_styles.css');  
-  wp_enqueue_style('cssmenumaker-colorpicker', plugins_url().'/cssmenumaker/scripts/colorpicker/css/colorpicker.min.css');    
+  wp_enqueue_style('cssmenumaker-spectrum', plugins_url().'/cssmenumaker/scripts/spectrum/spectrum.css');    
   wp_enqueue_style('cssmenumaker-fancybox', plugins_url().'/cssmenumaker/scripts/fancybox/jquery.fancybox.css');    
   wp_enqueue_style('cssmenumaker-builder-styles', plugins_url().'/cssmenumaker/css/styles.css');   
   
