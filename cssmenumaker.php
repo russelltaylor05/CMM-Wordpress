@@ -9,7 +9,11 @@
  * License: GPL2
  */
 
-define("TRIAL", 0);
+define("TRIAL", 1);
+
+global $starter_themes;
+$starter_themes = array(135,116,311,213,326,301);
+
 
 /* Include Files */
 add_action('plugins_loaded', 'cssmenumaker_menu_load');
@@ -53,17 +57,20 @@ add_filter('wp_nav_menu_args', 'cssmenumaker_modify_nav_menu_args', 5000);
 function cssmenumaker_modify_nav_menu_args($args)
 {
   
+  
+  
+  
   /* Pass cssmenumaker_flag & cssmenumaker_id to the wp_nav_menu() and this filter kicks in */
   if(isset($args['cssmenumaker_flag']) && isset($args['cssmenumaker_id'])) {
 
     $id = $args['cssmenumaker_id'];
     $menu_settings = json_decode(get_post_meta($id, 'cssmenu_settings', true));     
     $wordpress_menu = get_post_meta($id, "cssmenu_structure", true);
-
+    
     $args['menu'] = $wordpress_menu;
     $args['container'] = "div";
 		$args['container_id'] = "cssmenu-{$id}";
-		$args['container_class'] = "cssmenumaker-menu";
+		$args['container_class'] = "cssmenumaker-menu align-".$menu_settings->currentSettings->menu_align;
     $args['menu_class'] = '';
     $args['menu_id'] = '';  
     $args['depth'] = $menu_settings->depth;            
@@ -77,16 +84,17 @@ function cssmenumaker_modify_nav_menu_args($args)
     $cssmenu_location = get_post_meta( $available_menu->ID, 'cssmenu_location', true );
     $cssmenu_structure = get_post_meta( $available_menu->ID, 'cssmenu_structure', true );    
     $menu_css = get_post_meta($available_menu->ID, "cssmenu_css", true);
-    $menu_js = get_post_meta($available_menu->ID, "cssmenu_js", true);    
+    $menu_js = get_post_meta($available_menu->ID, "cssmenu_js", true);
+    $current_theme_id =  esc_html( get_post_meta($available_menu->ID, 'cssmenu_theme_id', true));  
     $menu_settings = json_decode(get_post_meta( $available_menu->ID, 'cssmenu_settings', true)); 
     
     if ($cssmenu_location == $args['theme_location']) {
-      if(!demo_check()) {
+      if(trial_vis_check($current_theme_id)) {
         
         $args['menu'] = $cssmenu_structure;
     		$args['container'] = "div";
         $args['container_id'] = "cssmenu-{$available_menu->ID}";
-    		$args['container_class'] = "cssmenumaker-menu";
+    		$args['container_class'] = "cssmenumaker-menu align-".$menu_settings->currentSettings->menu_align;
         $args['menu_class'] = '';
         $args['menu_id'] = '';  
         $args['depth'] = $menu_settings->depth;            
@@ -99,7 +107,7 @@ function cssmenumaker_modify_nav_menu_args($args)
         }            
       } else {
         $args['echo'] = false;
-        print "Your menu will not be displayed while MenuMaker is in demo mode. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>purchase a key</a> to unlock the full version.";    
+        print "<div class='upgrade-msg'>Your menu will not be displayed while MenuMaker is in demo mode. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>purchase a key</a> to unlock the full version.</div>";    
       }
   	}
   }
@@ -121,8 +129,10 @@ function cssmenumaker_print_menu($menu_id = 0)
     print "The ID you provided is not a valid MenuMaker menu.";
     return;
   }
+  $current_theme_id =  esc_html( get_post_meta(intval($menu_id), 'cssmenu_theme_id', true));  
   
-  if(!demo_check()) {
+  
+  if(trial_vis_check($current_theme_id)) {
 
     wp_nav_menu(array(
       'cssmenumaker_flag' => true,
@@ -140,7 +150,7 @@ function cssmenumaker_print_menu($menu_id = 0)
     }    
 
   } else {
-    print "Your menu will not be displayed while MenuMaker is in demo mode. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>purchase a key</a> to unlock the full version.";    
+    print "<div class='upgrade-msg'>Your menu will not be displayed while MenuMaker is in demo mode. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>purchase a key</a> to unlock the full version</div>";    
   }
 }
 
@@ -180,8 +190,26 @@ function cssmenumenumaker_manage_columns($column, $post_id)
 	}
 }
 
+/* 
+ * Returns true if the menu can be shown, false if user can't use the menu theme
+ * $theme_id : Theme ID of the menu trying to be displayed. 
+ */
+function trial_vis_check($theme_id) {
 
+  global $starter_themes;
+  if(in_trial_mode() && !in_array($theme_id, $starter_themes)) {
+    return false;
+  }  
+  return true;
+}
 
+/* 
+ * return true if we are in trial mode, false if user has upgraded 
+ */
+function in_trial_mode() {
+  
+  return true;
+}
 
 
 /* 
@@ -200,7 +228,6 @@ function beta_notice() {
   }
 }
 
-
 add_action('admin_notices', 'demo_notice' );
 function demo_notice() {
   $screen = get_current_screen();
@@ -213,12 +240,6 @@ function demo_notice() {
 }
 */
 
-/* 
- * Returns true if software should be in demo mode
- */
-function demo_check() {
-  return TRIAL;
-}
 
 
 

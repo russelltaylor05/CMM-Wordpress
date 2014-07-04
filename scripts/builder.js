@@ -20,7 +20,8 @@ function previewMenu(builder)
   var renderedJquery = undefined;
   
             
-	/* Update build.currentSettings  */	
+  console.log(builder.currentSettings);
+	/* Update build.currentSettings  */	  
   for(tag in currentTags) {
     builder.currentSettings[tag] = $("input[name='" + tag + "'], select[name='" + tag + "']").val();
     builder.currentSettings[tag] = builder.currentSettings[tag];
@@ -281,6 +282,7 @@ function grabCurrentSettings(form)
 		var name = $(this).attr("name");
 		item.settings[name] = $(this).val();		
 	});	
+
 	return this.settings;
 }
 

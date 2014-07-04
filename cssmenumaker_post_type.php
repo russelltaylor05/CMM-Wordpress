@@ -64,10 +64,14 @@ function cssmenumaker_admin_init()
 
 function cssmenumaker_admin_menu_preview($cssmenu)
 {
-  $cssmenu_structure = get_post_meta( $cssmenu->ID, 'cssmenu_structure', true );
+  $cssmenu_structure = get_post_meta( $cssmenu->ID, 'cssmenu_structure', true );  
+  $theme_id = esc_html( get_post_meta( $cssmenu->ID, 'cssmenu_theme_id', true));  
   if($cssmenu_structure) {
     print "<div id='menu-code'></div>";    
-    wp_nav_menu(array('cssmenumaker_id' => $cssmenu->ID, 'cssmenumaker_flag' => true));  
+    wp_nav_menu(array('cssmenumaker_id' => $cssmenu->ID, 'cssmenumaker_flag' => true));
+    if(!trial_vis_check($theme_id))   {
+      print "You are using a Premium Menu template.";
+    }
   }
 }
 
@@ -78,12 +82,13 @@ function cssmenumaker_admin_menu_preview($cssmenu)
 /* Display Menu Options */
 function cssmenumaker_admin_menu_options($cssmenu) 
 {    
-  // Retrieve current author and rating based on review ID
+  global $starter_themes;
   $cssmenu_structure = esc_html( get_post_meta( $cssmenu->ID, 'cssmenu_structure', true));
   $cssmenu_location = esc_html( get_post_meta( $cssmenu->ID, 'cssmenu_location', true));
   $cssmenu_theme_id = esc_html( get_post_meta( $cssmenu->ID, 'cssmenu_theme_id', true));  
   $cssmenu_step = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_step', true));    
   $wordpress_menus = get_terms('nav_menu', array( 'hide_empty' => true ) );
+
   $themeMenus = json_decode(file_get_contents(dirname(__FILE__).DIRECTORY_SEPARATOR."menus/theme_select.json"));  
   if(!$cssmenu_step) {
     $cssmenu_step = 1;
@@ -189,13 +194,22 @@ function cssmenumaker_admin_menu_options($cssmenu)
   print "</div>";
   
   print "<ul id='theme-thumbs'>";
+  $li_output = "";
   foreach($themeMenus as $id => $menu) {
+    $data = "data-id='".$menu->id."' ";
     $classes = "";
     foreach($menu->terms as $term) {
       $classes .= "{$term} ";
+    }    
+    if(in_array($menu->id, $starter_themes)) {
+      $classes .= " free";
+      $li_output = "<li class='{$classes}'><a href='#' {$data}><div class='banner'></div><img src='".plugins_url()."/cssmenumaker/menus/".$menu->thumbpath."' /></a></li>" . $li_output;
+    } else {
+      $classes .= " premium";
+      $li_output .= "<li class='{$classes}'><a href='#' {$data}><div class='banner'></div><img src='".plugins_url()."/cssmenumaker/menus/".$menu->thumbpath."' /></a></li>";
     }
-    print "<li class='{$classes}'><a href='#' data-id='".$menu->id."'><img src='".plugins_url()."/cssmenumaker/menus/".$menu->thumbpath."' /></a></li>";
   }
+  print $li_output;
   print "</ul>";
   print "</div></div><!-- /#theme-overlay -->";  
 }
@@ -207,6 +221,7 @@ function cssmenumaker_admin_menu_database($cssmenu)
   $cssmenu_js = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_js', true ) );
   $cssmenu_settings = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_settings', true ) );
   $cssmenu_custom_css = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_custom_css', true ) );  
+
   
   print "<label>CSS</label>";
   print '<textarea name="cssmenu_css" id="cssmenu_css">'.$cssmenu_css."</textarea>";
@@ -295,6 +310,18 @@ function cssmenumake_menu_help()  {
 }
 function cssmenumaker_help_page()  {
   require(dirname(__FILE__).DIRECTORY_SEPARATOR.'help.inc');
+}
+
+
+add_action('admin_menu', 'cssmenumake_menu_upgrade');
+function cssmenumake_menu_upgrade()  {
+	add_submenu_page('edit.php?post_type=cssmenu', 
+                    'MenuMaker Upgrade', 
+                    'Upgrade', 'manage_options', 'cssmenu-upgrade', 
+                    'cssmenumaker_upgrade_page');
+}
+function cssmenumaker_upgrade_page()  {
+  require(dirname(__FILE__).DIRECTORY_SEPARATOR.'upgrade.inc');
 }
 
 
