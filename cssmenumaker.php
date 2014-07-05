@@ -9,10 +9,10 @@
  * License: GPL2
  */
 
-define("TRIAL", 1);
+define("TRIAL_MODE", 1);
 
 global $starter_themes;
-$starter_themes = array(135,116,311,213,326,301);
+$starter_themes = array(314,249,326,301,303,319);
 
 
 /* Include Files */
@@ -67,10 +67,12 @@ function cssmenumaker_modify_nav_menu_args($args)
     $menu_settings = json_decode(get_post_meta($id, 'cssmenu_settings', true));     
     $wordpress_menu = get_post_meta($id, "cssmenu_structure", true);
     
+    $align_class = (isset($menu_settings->currentSettings->menu_align)) ? "align-".$menu_settings->currentSettings->menu_align : "";
+    
     $args['menu'] = $wordpress_menu;
     $args['container'] = "div";
 		$args['container_id'] = "cssmenu-{$id}";
-		$args['container_class'] = "cssmenumaker-menu align-".$menu_settings->currentSettings->menu_align;
+		$args['container_class'] = "cssmenumaker-menu {$align_class}";
     $args['menu_class'] = '';
     $args['menu_id'] = '';  
     $args['depth'] = $menu_settings->depth;            
@@ -90,11 +92,11 @@ function cssmenumaker_modify_nav_menu_args($args)
     
     if ($cssmenu_location == $args['theme_location']) {
       if(trial_vis_check($current_theme_id)) {
-        
+        $align_class =  (isset($menu_settings->currentSettings->menu_align)) ? "align-".$menu_settings->currentSettings->menu_align : "" ;
         $args['menu'] = $cssmenu_structure;
     		$args['container'] = "div";
         $args['container_id'] = "cssmenu-{$available_menu->ID}";
-    		$args['container_class'] = "cssmenumaker-menu align-".$menu_settings->currentSettings->menu_align;
+    		$args['container_class'] = "cssmenumaker-menu {$align_class}";
         $args['menu_class'] = '';
         $args['menu_id'] = '';  
         $args['depth'] = $menu_settings->depth;            
@@ -107,7 +109,7 @@ function cssmenumaker_modify_nav_menu_args($args)
         }            
       } else {
         $args['echo'] = false;
-        print "<div class='upgrade-msg'>Your menu will not be displayed while MenuMaker is in demo mode. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>purchase a key</a> to unlock the full version.</div>";    
+        print "<div class='upgrade-msg'>You do not have access to the premium menus. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>Upgrade</a> to gain access to all menu themes.</div>";    
       }
   	}
   }
@@ -150,7 +152,7 @@ function cssmenumaker_print_menu($menu_id = 0)
     }    
 
   } else {
-    print "<div class='upgrade-msg'>Your menu will not be displayed while MenuMaker is in demo mode. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>purchase a key</a> to unlock the full version</div>";    
+    print "<div class='upgrade-msg'>You do not have access to the premium menus. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>Upgrade</a> to gain access to all menu themes.</div>";    
   }
 }
 
@@ -208,7 +210,7 @@ function trial_vis_check($theme_id) {
  */
 function in_trial_mode() {
   
-  return true;
+  return TRIAL_MODE;
 }
 
 

@@ -26,7 +26,12 @@ a.blue-button:visited {color: #fff;}
 /*.wp-admin #add-cssmenu {display: none;}*/
 
 .upgrade-msg {background: #ffb2b2; border: 1px solid #ff0000;  }
+#upgrade-page ul {padding: 0 0 0 20px;}
+#upgrade-page li {list-style: circle;}
+#upgrade-page p.error {color: red;}
+#theme-select-trial-msg {padding: 10px; background: #fbeea8; border: 1px solid #d9b700;}
 
+p.preview-trial-msg {margin: 20px 0 0 0; padding: 10px; background: #fbeea8; border: 1px solid #d9b700;}
  
 #cssmenumaker_menu_database {display: none;}
 
@@ -40,7 +45,7 @@ a.blue-button:visited {color: #fff;}
 #theme-thumbs li a {width: 200px; height: 100px; margin: 0; display: block; overflow: hidden;}
 #theme-thumbs li img {margin: 0; padding: 0; border: 0;}
 #theme-thumbs li:hover {box-shadow: 0 1px 4px rgba(0,0,0,.6);}
-#theme-thumbs li.premium .banner {height: 80px; width: 80px; background: url(../images/premium_banner.png) top left no-repeat; position: absolute; top: -2px; right: -3px;}
+.trial #theme-thumbs li.premium .banner {height: 80px; width: 80px; background: url(../images/premium_banner.png) top left no-repeat; position: absolute; top: -2px; right: -3px;}
 
 .theme-trigger {height: auto; margin: 0; padding: 0; float: left; display: block; background: url(../images/select_tall_bg.png) top left repeat-x;border: 1px solid #cccccc; border-radius: 2px; color: #666666; line-height: 1;}
 .theme-trigger span {height: 50px; width: 100px; margin: 6px; padding: 0; display: block; float: left; top: 0; overflow: hidden;}
