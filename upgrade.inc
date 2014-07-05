@@ -1,7 +1,7 @@
 
 <?php
   //update_option("cssmenumaker_premium_access", 0);
-  $needle = "f74ataRH";  
+  $needle = "f74ataRH";
   $access_granted =  get_option("cssmenumaker_premium_access");
   $user_code = (isset($_POST['activation_code'])) ? $_POST['activation_code'] : "";
   $step = (isset($_POST['step'])) ? 1 : 0;
