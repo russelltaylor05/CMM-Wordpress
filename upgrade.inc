@@ -53,9 +53,7 @@
   </ul>
   <p><a href="http://cssmenumaker.com/wordpress-menu-plugin" target="_blank" class="button-primary">Learn More</a></p>
   
-
-  <?php } else {  ?>
-    
+  <?php } else {  ?>    
     <h1>Thank you for purchasing MenuMaker Wordpress</h2>
   <?php } ?>
 </div>

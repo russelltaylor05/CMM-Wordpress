@@ -72,7 +72,7 @@ function cssmenumaker_admin_menu_preview($cssmenu)
   if($cssmenu_structure) {
     print "<div id='menu-code'></div>";    
     wp_nav_menu(array('cssmenumaker_id' => $cssmenu->ID, 'cssmenumaker_flag' => true));
-    if (TRIAL_MODE && !get_option('cssmenumaker_premium_access') && !trial_vis_check($theme_id)) {
+    if (!trial_vis_check($theme_id)) {
       print "<p class='preview-trial-msg'>The premium theme you have choosen requires and upgrade. Please choose one of our free themes or <a href='http://cssmenumaker.com/wordpress-menu-plugin' target='_blank'>Upgrade</a> to gain full access.</p>";
     }
   }
@@ -178,7 +178,7 @@ function cssmenumaker_admin_menu_options($cssmenu)
   print "</div><!-- #options-display -->";  
    
   /* Theme Select Overlay */
-  if(TRIAL_MODE){
+  if(TM){
     $classes = (get_option('cssmenumaker_premium_access')) ? "activated" : "trial" ;  
   } else {
     $classes = "";
@@ -202,7 +202,7 @@ function cssmenumaker_admin_menu_options($cssmenu)
   print "</ul>";
   print "</div>";
   
-  if (TRIAL_MODE && !get_option('cssmenumaker_premium_access')) {
+  if (TM && !get_option('cssmenumaker_premium_access')) {
     print "<p id='theme-select-trial-msg'>We provide a handful of free menus for you to use with MenuMaker. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>upgrade</a> to gain access to the premium menus and our awesome support team.</p>";
 
   }  
@@ -329,10 +329,12 @@ function cssmenumaker_help_page()  {
 
 add_action('admin_menu', 'cssmenumake_menu_upgrade');
 function cssmenumake_menu_upgrade()  {
-	add_submenu_page('edit.php?post_type=cssmenu', 
-                    'MenuMaker Upgrade', 
-                    'Upgrade', 'manage_options', 'cssmenu-upgrade', 
-                    'cssmenumaker_upgrade_page');
+  if(TM) {
+	  add_submenu_page('edit.php?post_type=cssmenu', 
+                      'MenuMaker Upgrade', 
+                      'Upgrade', 'manage_options', 'cssmenu-upgrade', 
+                      'cssmenumaker_upgrade_page');
+  }
 }
 function cssmenumaker_upgrade_page()  {
   require(dirname(__FILE__).DIRECTORY_SEPARATOR.'upgrade.inc');

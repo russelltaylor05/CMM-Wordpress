@@ -9,11 +9,9 @@
  * License: GPL2
  */
 
-define("TRIAL_MODE", 1);
-
+define("TM", 1);
 global $starter_themes;
 $starter_themes = array(314,249,326,301,303,319);
-
 
 /* Include Files */
 add_action('plugins_loaded', 'cssmenumaker_menu_load');
@@ -56,10 +54,6 @@ function ajax_get_menu_json() {
 add_filter('wp_nav_menu_args', 'cssmenumaker_modify_nav_menu_args', 5000);
 function cssmenumaker_modify_nav_menu_args($args)
 {
-  
-  
-  
-  
   /* Pass cssmenumaker_flag & cssmenumaker_id to the wp_nav_menu() and this filter kicks in */
   if(isset($args['cssmenumaker_flag']) && isset($args['cssmenumaker_id'])) {
 
@@ -197,20 +191,11 @@ function cssmenumenumaker_manage_columns($column, $post_id)
  * $theme_id : Theme ID of the menu trying to be displayed. 
  */
 function trial_vis_check($theme_id) {
-
   global $starter_themes;
-  if(in_trial_mode() && !in_array($theme_id, $starter_themes)) {
+  if(TM && !get_option('cssmenumaker_premium_access') && !in_array($theme_id, $starter_themes)) {
     return false;
   }  
   return true;
-}
-
-/* 
- * return true if we are in trial mode, false if user has upgraded 
- */
-function in_trial_mode() {
-  
-  return TRIAL_MODE;
 }
 
 
