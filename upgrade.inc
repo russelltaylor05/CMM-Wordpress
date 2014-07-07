@@ -28,7 +28,7 @@
     <input class="button-primary" type="submit" value="Activate" />
   </form>
   <?php if($error_code == 1) { ?>
-    <p class='error'>The activation code you have entered is incorrect. Please try again or <a href='http://cssmenumaker.com/support'>contact us</a> if you are having problems.</p>
+    <p class='error'>The activation code you have entered is incorrect. Please try again or <a target='_blank' href='http://cssmenumaker.com/support'>contact us</a> if you are having problems.</p>
   <?php } ?>
   </br></br>
   

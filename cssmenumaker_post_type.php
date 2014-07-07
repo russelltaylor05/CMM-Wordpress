@@ -91,7 +91,6 @@ function cssmenumaker_admin_menu_options($cssmenu)
   $cssmenu_theme_id = esc_html( get_post_meta( $cssmenu->ID, 'cssmenu_theme_id', true));  
   $cssmenu_step = esc_html(get_post_meta( $cssmenu->ID, 'cssmenu_step', true));    
   $wordpress_menus = get_terms('nav_menu', array( 'hide_empty' => true ) );
-
   $themeMenus = json_decode(file_get_contents(dirname(__FILE__).DIRECTORY_SEPARATOR."menus/theme_select.json"));  
   if(!$cssmenu_step) {
     $cssmenu_step = 1;
@@ -101,7 +100,8 @@ function cssmenumaker_admin_menu_options($cssmenu)
   print "<div id='options-display' class='".$classes."'>";  
   print "<ul id='option-toggle' class='clearfix'><li><a href='#theme' class='active'>Menu Options</a></li><li><a href='#menu'>Display Options</a></li></ul>";
   print "<div id='menu-options' class='option-pane clearfix'>";
-
+  
+  /* Menu Placement Display Options */
   print "<div class='panel location'>";
   print '<h4>Menu Location</h4>';
   print "<p class='help'>Select a theme location to display your menu.</p>";  
@@ -136,32 +136,52 @@ function cssmenumaker_admin_menu_options($cssmenu)
 
   print "<div id='theme-options' class='option-pane clearfix'>";
 
-  print "<div class='panel structure'>";
-  print '<h4>Structure</h4>';
-  print "<p class='help'>Select a Wordpress menu you would like to customize with MenuMaker.</p>";
-  print '<select name="cssmenu_structure">';
-  foreach($wordpress_menus as $id => $menu) {
-    print '<option value="'.$menu->slug.'"';
-    print selected( $menu->slug, $cssmenu_structure ).'>';
-    print $menu->name;
-    print "</option>";
-  }
-  print " </select>";
-  print "</div><!-- .panel -->";  
-
-
-  print "<div class='panel'>";
-  print '<h4>Theme</h4>';  
-  print "<input type='hidden' name='cssmenu_theme_id' value='".$cssmenu_theme_id."' />";
-  print '<a href="#theme-select-overlay" id="theme-select-trigger" class="theme-trigger clearfix"><span>';
-  foreach($themeMenus as $theme) {
-    if($theme->id == $cssmenu_theme_id) {
-      print "<img src='".plugins_url()."/cssmenumaker/menus/".$theme->thumbpath."' />";
+  /* Structure Select */
+  if($cssmenu_step == 1) {
+    print "<div class='panel structure'>";
+    print '<h4>Structure</h4>';
+    print "<p class='help'>Select a Wordpress menu you would like to customize with MenuMaker.</p>";
+    print '<select name="cssmenu_structure">';
+    foreach($wordpress_menus as $id => $menu) {
+      print '<option value="'.$menu->slug.'"';
+      print selected( $menu->slug, $cssmenu_structure ).'>';
+      print $menu->name;
+      print "</option>";
     }
+    print " </select>";
+    print "</div><!-- .panel -->";  
   }
-  print '</span><div class="cssmenu-arrow"></div></a>';
-  print "<a href='#theme-select-overlay' id='theme-select-trigger' class='theme-trigger-initial'>Select a Theme</a>";    
+
+  /* Theme Select */
+  $classes = (TM) ? "trial-mode" : "";
+  $classes .= (get_option('cssmenumaker_premium_access')) ? " activated" : " not-activated";
+
+  print "<div class='panel {$classes}' id='theme-select-panel'>";
+  if(TM && !get_option('cssmenumaker_premium_access') & $cssmenu_step == 1) { /* Display limited menus */
+
+    print '<h4>Select a Menu Style</h4>';  
+    print "<input type='hidden' name='cssmenu_theme_id' value='".$cssmenu_theme_id."' />";
+    print "<ul id='trial-themes'>";
+    print "<li><a href='#' class='trial-theme-select drop-down' data-id='301' class=''>Drop Down</a></li>";
+    print "<li><a href='#' class='trial-theme-select flyout' data-id='249' class=''>Flyout</a></li>";    
+    print "<li><a href='#' class='trial-theme-select accordion' data-id='314' class=''>Accordion</a></li>";
+    print "</ul'>";
+    
+  } else { /* Display all menu themes */
+    
+    print '<h4>Change Theme</h4>';  
+    print "<input type='hidden' name='cssmenu_theme_id' value='".$cssmenu_theme_id."' />";
+    print '<a href="#theme-select-overlay" id="theme-select-trigger" class="theme-trigger clearfix"><span>';
+    foreach($themeMenus as $theme) {
+      if($theme->id == $cssmenu_theme_id) {
+        print "<img src='".plugins_url()."/cssmenumaker/menus/".$theme->thumbpath."' />";
+      }
+    }
+    print '</span><div class="cssmenu-arrow"></div></a>';
+    print "<a href='#theme-select-overlay' id='theme-select-trigger' class='theme-trigger-initial'>Select a Theme</a>";        
+  }
   print "</div><!-- .panel -->";  
+  
 
   if($cssmenu_step == 2) {
     require(dirname(__FILE__).DIRECTORY_SEPARATOR.'builder_settings.php');
@@ -183,7 +203,6 @@ function cssmenumaker_admin_menu_options($cssmenu)
   } else {
     $classes = "";
   }  
-
   print "<div id='theme-select-overlay' class='{$classes}'><div class='container'>";
   print "<div id='filters'>";
   print "<h4>Menu Themes</h4>";  
@@ -203,9 +222,18 @@ function cssmenumaker_admin_menu_options($cssmenu)
   print "</div>";
   
   if (TM && !get_option('cssmenumaker_premium_access')) {
-    print "<p id='theme-select-trial-msg'>We provide a handful of free menus for you to use with MenuMaker. Please <a href='http://cssmenumaker.com/wordpress-menu-plugin'>upgrade</a> to gain access to the premium menus and our awesome support team.</p>";
-
+    print "<div id='theme-select-trial-msg'>";
+    print "<h2>Upgrade Now and get 100+ Professional Menu Themes</h2>";
+    print "<ul>";
+    print "<li>Endless customization options.</li>";
+    print "<li>Quality code tested on all major browsers.</li>";
+    print "<li>Use jQuery or pure CSS.</li>";
+    print "<li>Built for mobile and tablets (iPad/iPhone/Android).</li>";    
+    print "</ul>";
+    print "<a href='http://cssmenumaker.com/wordpress-menu-plugin' class='button step-1 button-primary button-large' target='_blank'>Upgrade Now</a>";
+    print "</div>";
   }  
+  
   print "<ul id='theme-thumbs'>";
   $li_output = "";
   foreach($themeMenus as $id => $menu) {
@@ -214,13 +242,8 @@ function cssmenumaker_admin_menu_options($cssmenu)
     foreach($menu->terms as $term) {
       $classes .= "{$term} ";
     }    
-    if(in_array($menu->id, $starter_themes)) {
-      $classes .= " free";
-      $li_output = "<li class='{$classes}'><a href='#' {$data}><div class='banner'></div><img src='".plugins_url()."/cssmenumaker/menus/".$menu->thumbpath."' /></a></li>" . $li_output;
-    } else {
-      $classes .= " premium";
-      $li_output .= "<li class='{$classes}'><a href='#' {$data}><div class='banner'></div><img src='".plugins_url()."/cssmenumaker/menus/".$menu->thumbpath."' /></a></li>";
-    }
+    $li_output .= "<li class='{$classes}'><a href='#' {$data}><div class='banner'></div><img src='".plugins_url()."/cssmenumaker/menus/".$menu->thumbpath."' /></a></li>";  
+
   }
   print $li_output;
   print "</ul>";

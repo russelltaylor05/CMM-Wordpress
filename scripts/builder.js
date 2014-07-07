@@ -19,8 +19,6 @@ function previewMenu(builder)
 	var parser = new(less.Parser);
   var renderedJquery = undefined;
   
-            
-  console.log(builder.currentSettings);
 	/* Update build.currentSettings  */	  
   for(tag in currentTags) {
     builder.currentSettings[tag] = $("input[name='" + tag + "'], select[name='" + tag + "']").val();
@@ -398,11 +396,11 @@ $(document).ready(function()
     $(".theme-trigger-initial").hide();
   }
   
+  /* Theme select for Overlay */
   $("#theme-thumbs a").click(function(event){
     event.preventDefault();
     theme_id = $(this).attr('data-id');
     $("input[name='cssmenu_theme_id']").val(theme_id);
-
     var post_id = $("input[name='post_ID']").val();
   	var url = cssmenu_global.root_url + "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id;      
   	$.getJSON(url, function(data) {
@@ -427,8 +425,29 @@ $(document).ready(function()
       }
 
     });      
-
     $.fancybox.close();
+  });
+  
+  /* Theme select for Step 1 AND in Trial Mode */
+  $("#trial-themes .trial-theme-select").click(function(event){
+    event.preventDefault();
+    $("#trial-themes li").removeClass('selected');
+    $(this).closest("li").addClass('selected');
+    
+    theme_id = $(this).attr('data-id');
+    $("input[name='cssmenu_theme_id']").val(theme_id);
+    var post_id = $("input[name='post_ID']").val();
+  	var url = cssmenu_global.root_url + "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id;      
+  	$.getJSON(url, function(data) {
+      data.post_id = post_id;      
+      var builder = new CSSMenuMaker(data, null);      
+      $("#cssmenu_settings").val(JSON.stringify(builder));    
+      var url = cssmenu_global.root_url + "/wp-admin/admin-ajax.php?action=get_menu_json&theme_id=" + theme_id
+    	$.getJSON(url, function(data) {
+        var img = "<img src='" + cssmenu_global.root_url + "/wp-content/plugins/cssmenumaker/menus/" + data.thumbnail + "' />";
+        $(".theme-trigger span").html(img);
+    	});
+    });
   });
   
   $("#filters .cats a").click(function(event){

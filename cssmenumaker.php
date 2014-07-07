@@ -11,7 +11,7 @@
 
 define("TM", 1);
 global $starter_themes;
-$starter_themes = array(314,249,326,301,303,319);
+$starter_themes = array(314,249,301);
 
 /* Include Files */
 add_action('plugins_loaded', 'cssmenumaker_menu_load');
@@ -69,7 +69,7 @@ function cssmenumaker_modify_nav_menu_args($args)
 		$args['container_class'] = "cssmenumaker-menu {$align_class}";
     $args['menu_class'] = '';
     $args['menu_id'] = '';  
-    $args['depth'] = $menu_settings->depth;            
+    $args['depth'] = $menu_settings->depth;       
     $args['walker'] = new CSS_Menu_Maker_Walker();
     
   } 

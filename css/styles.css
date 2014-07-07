@@ -25,14 +25,24 @@ a.blue-button:visited {color: #fff;}
 
 /*.wp-admin #add-cssmenu {display: none;}*/
 
+/* Trial Stuff */
 .upgrade-msg {background: #ffb2b2; border: 1px solid #ff0000;  }
+p.preview-trial-msg {margin: 20px 0 0 0; padding: 10px; background: #fbeea8; border: 1px solid #d9b700;}
 #upgrade-page ul {padding: 0 0 0 20px;}
 #upgrade-page li {list-style: circle;}
 #upgrade-page p.error {color: red;}
-#theme-select-trial-msg {padding: 10px; background: #fbeea8; border: 1px solid #d9b700;}
+#theme-select-trial-msg {padding: 20px; background: #fbeea8; border: 1px solid #d9b700;}
+#theme-select-trial-msg h2 {line-height: 1; margin: 0 0 15px 0;}
+#theme-select-trial-msg ul {margin: 0 0 10px   20px; list-style: disc;}
+#theme-select-trial-msg li {width: 40%; float: left; padding-right: 5%;}
 
-p.preview-trial-msg {margin: 20px 0 0 0; padding: 10px; background: #fbeea8; border: 1px solid #d9b700;}
- 
+#trial-themes li {width: 120px; padding: 5px; border-radius: 3px;}
+#trial-themes li.selected {background: #efefef;} 
+#trial-themes li.selected a {color: #000; text-decoration: none;}
+#trial-themes a {padding: 0 0 0 30px; display: block; background: url(../images/menu_shapes.png) top left no-repeat; height: 24px; line-height: 24px;}
+#trial-themes a.flyout {background-position: 0 -24px;}
+#trial-themes a.accordion {background-position: 0 -72px;}
+
 #cssmenumaker_menu_database {display: none;}
 
 #cssmenumaker_preview {padding: 0; background: none; border: none; box-shadow: none;}
@@ -77,7 +87,7 @@ p.preview-trial-msg {margin: 20px 0 0 0; padding: 10px; background: #fbeea8; bor
 .fancy-select:hover {background: #ebebeb;}
 a:link.fancy-select {color: #666666;}
 a:visited.fancy-select {color: #666666;}
-
+.fancybox-overlay {z-index: 10000;}
 
 #builder-settings-panel {margin: 0 0 20px 0; }
 
