@@ -96,6 +96,22 @@ function cssmenumaker_admin_menu_options($cssmenu)
     $cssmenu_step = 1;
   }
 
+  /* No Wordpress Menus Present */
+  if(empty($wordpress_menus)) {
+    print "<div id='no-wordpress-menus-msg'>";
+    print "<p>Before you can start using the MenuMaker plugin you must first create a menu structure using the Wordpress Menu System.</p>";
+    print "<p>To create a Wordpress Menu, follow the instructions below:</p>";
+    print "<ol>";
+    print "<li>Navigate to <strong>Appearance > Menus</strong></li>";
+    print "<li>Enter a Menu Name.</li>";
+    print "<li>Use the left sidebar to add Pages and Posts to the menu structure.</li>";
+    print "<li>Click <strong>Create Menu</strong></li>";
+    print "</ol>";  
+    print "<p>Once you are finished, come back here and you will be able to customize and build your menu.</p>";
+    print "</div>";    
+    return;
+  }
+ 
   $classes = ($cssmenu_step == 2) ? "step-2" : "step-1";
   print "<div id='options-display' class='".$classes."'>";  
   print "<ul id='option-toggle' class='clearfix'><li><a href='#theme' class='active'>Menu Options</a></li><li><a href='#menu'>Display Options</a></li></ul>";
