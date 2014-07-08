@@ -68,7 +68,8 @@ function cssmenumaker_modify_nav_menu_args($args)
 		$args['container_id'] = "cssmenu-{$id}";
 		$args['container_class'] = "cssmenumaker-menu {$align_class}";
     $args['menu_class'] = '';
-    $args['menu_id'] = '';  
+    $args['menu_id'] = '';
+    $args['items_wrap'] = '<ul id="%1$s" class="%2$s">%3$s</ul>';
     $args['depth'] = $menu_settings->depth;       
     $args['walker'] = new CSS_Menu_Maker_Walker();
     
@@ -92,7 +93,8 @@ function cssmenumaker_modify_nav_menu_args($args)
         $args['container_id'] = "cssmenu-{$available_menu->ID}";
     		$args['container_class'] = "cssmenumaker-menu {$align_class}";
         $args['menu_class'] = '';
-        $args['menu_id'] = '';  
+        $args['menu_id'] = '';
+        $args['items_wrap'] = '<ul id="%1$s" class="%2$s">%3$s</ul>';
         $args['depth'] = $menu_settings->depth;            
         $args['walker'] = new CSS_Menu_Maker_Walker();
 
