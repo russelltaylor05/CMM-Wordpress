@@ -9,7 +9,7 @@
  * License: GPL2
  */
 
-define("TM", 1);
+define("TM", 0);
 global $starter_themes;
 $starter_themes = array(314,249,301);
 

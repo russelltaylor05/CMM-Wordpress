@@ -23,7 +23,8 @@ a.blue-button:visited {color: #fff;}
 .wp-admin.post-type-cssmenu #edit-slug-box {display:none;}
 .wp-admin.post-type-cssmenu textarea {width: 100%; height: 250px; font-size: 12px; font-family: consolas, courier, monospace; font-size: 1em; line-height: 1.2em; white-space: pre;}
 
-/*.wp-admin #add-cssmenu {display: none;}*/
+
+
 
 /* Trial Stuff */
 .upgrade-msg {background: #ffb2b2; border: 1px solid #ff0000;  }
@@ -50,7 +51,10 @@ p.preview-trial-msg {margin: 20px 0 0 0; padding: 10px; background: #fbeea8; bor
 #cssmenumaker_preview h3,
 #cssmenumaker_preview .handlediv {display: none;}
 
-#theme-select-overlay {padding: 0 0 0 200px; display: none; }
+.mfp-wrap {z-index: 100000 !important;}
+#theme-select-overlay {position: relative; background: #FFF; padding: 0 0 0 200px;  width: auto; max-width: 1000px; margin: 20px auto; border-radius: 5px;}
+#theme-select-overlay > div {padding: 20px;}
+
 #theme-thumbs li {margin: 0 10px 10px 0; padding: 5px; float: left; position: relative; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.3); border-radius: 2px;}
 #theme-thumbs li a {width: 200px; height: 100px; margin: 0; display: block; overflow: hidden;}
 #theme-thumbs li img {margin: 0; padding: 0; border: 0;}
@@ -87,10 +91,8 @@ p.preview-trial-msg {margin: 20px 0 0 0; padding: 10px; background: #fbeea8; bor
 .fancy-select:hover {background: #ebebeb;}
 a:link.fancy-select {color: #666666;}
 a:visited.fancy-select {color: #666666;}
-.fancybox-overlay {z-index: 10000;}
 
 #builder-settings-panel {margin: 0 0 20px 0; }
-
 
 .panel {padding: 0 25px 0 0; margin: 0 25px 0 0; float: left;}
 .panel h4 {margin: 0 0 10px 0; padding: 0; font-size: 14px; line-height: 1;}
@@ -145,7 +147,10 @@ a:visited.fancy-select {color: #666666;}
 #sub-menu-settings-trigger {margin: 0;}
 
 #custom-css-trigger span {background: url(../images/icon_setting_select.png) center right no-repeat;}
-#custom-css-overlay textarea {height: 400px; margin: 0 0 15px 0;}
+#custom-css-overlay textarea {height: 400px; margin: 0 0 15px 0; padding: 5px;}
+#custom-css-overlay {max-width: 700px; margin: 20px auto; background: #efefef; border-radius: 5px;}
+#custom-css-overlay > div {padding: 20px;}
+#custom-css-overlay .cancel {margin: 0 0 0 15px;}
 
 .settings-overlay {width: 250px; padding: 15px; background: #fff; position: absolute; top: 79px; left: -60px; display: none; z-index: 998; box-shadow: 0 0 6px rgba(0,0,0,.4); border-radius: 3px;}
 .settings-overlay > div {position: relative;}

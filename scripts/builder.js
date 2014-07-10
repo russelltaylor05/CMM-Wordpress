@@ -239,21 +239,20 @@ function settingsFunctionality(builder)
   
   
   /* Custom CSS */
-	$("#custom-css-trigger").fancybox({
-		maxWidth	: 600,
-		fitToView	: false,
-		width		: '80%',
-		height		: 'auto',
-		autoSize	: false,
-		closeClick	: false,
-		openEffect	: 'none',
-		closeEffect	: 'none'
-	});
-  $("#custom-css-overlay a").click(function(e){
+  $("#custom-css-trigger").magnificPopup({
+    type: 'inline',
+    alignTop: 'true;',
+    midClick: true
+  });   
+  $("#custom-css-overlay a.submit").click(function(e){
     builder.customCSS = $("#cssmenu_custom_css").val();
     e.preventDefault();
-    $.fancybox.close();
+    $.magnificPopup.close();
     previewMenu(builder);
+  });
+  $("#custom-css-overlay a.cancel").click(function(e){
+    e.preventDefault();
+    $.magnificPopup.close();
   });
   
   
@@ -379,16 +378,17 @@ $(document).ready(function()
   /* Theme Selection/Change */
   /**************************/
   
-	$("#theme-select-trigger").fancybox({
-		maxWidth	: 1100,
-		fitToView	: false,
-		width		: '80%',
-		height		: '80%',
-		autoSize	: false,
-		closeClick	: false,
-		openEffect	: 'none',
-		closeEffect	: 'none'
-	});  
+  $('.theme-trigger-initial').magnificPopup({
+    type: 'inline',
+    alignTop: 'true;',
+    midClick: true
+  });  
+
+  $('.theme-trigger').magnificPopup({
+    type: 'inline',
+    alignTop: 'true;',
+    midClick: true 
+  });    
   
   if(!theme_id) {
     $(".theme-trigger").hide();
@@ -411,7 +411,7 @@ $(document).ready(function()
 
       if($("input[name='cssmenu_step']").val() == 2) {
         $("#cssmenu_js").val("");  
-        $("#cssmenu_css").val("");     
+        $("#cssmenu_css").val("");
         $("form#post").submit();
         
       } else {      
@@ -425,7 +425,7 @@ $(document).ready(function()
       }
 
     });      
-    $.fancybox.close();
+    $.magnificPopup.close();
   });
   
   /* Theme select for Step 1 AND in Trial Mode */

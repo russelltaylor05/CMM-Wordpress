@@ -44,15 +44,15 @@ function cssmenumaker_admin_init()
   wp_enqueue_script("cssmenu-builder", plugins_url().'/cssmenumaker/scripts/builder.js');
   wp_enqueue_script("cssmenu-builder-less", plugins_url().'/cssmenumaker/scripts/less.js');
   wp_enqueue_script("cssmenu-builder-spectrum", plugins_url().'/cssmenumaker/scripts/spectrum/spectrum.js'); 
-  wp_enqueue_script("cssmenu-builder-fancybox", plugins_url().'/cssmenumaker/scripts/fancybox/jquery.fancybox.pack.js');  
+  wp_enqueue_script("cssmenu-builder-magnific", plugins_url().'/cssmenumaker/scripts/magnific/jquery.magnific-popup.min.js'); 
 
   $data_array = array( 'plugin_url' => plugins_url(), 'root_url' => get_site_url());
   wp_localize_script( 'cssmenu-builder-structure', 'cssmenu_global', $data_array);
 
   wp_enqueue_style('cssmenumaker-base-styles', plugins_url().'/cssmenumaker/css/menu_styles.css');  
   wp_enqueue_style('cssmenumaker-spectrum', plugins_url().'/cssmenumaker/scripts/spectrum/spectrum.css');    
-  wp_enqueue_style('cssmenumaker-fancybox', plugins_url().'/cssmenumaker/scripts/fancybox/jquery.fancybox.css');    
   wp_enqueue_style('cssmenumaker-builder-styles', plugins_url().'/cssmenumaker/css/styles.css');   
+  wp_enqueue_style('cssmenumaker-magnific-css', plugins_url().'/cssmenumaker/scripts/magnific/magnific-popup.css');     
   
   add_meta_box('cssmenumaker_menu_options', 'Menu Options','cssmenumaker_admin_menu_options','cssmenu', 'normal', 'high' );
   add_meta_box('cssmenumaker_preview', 'Preview', 'cssmenumaker_admin_menu_preview', 'cssmenu', 'normal' );
@@ -95,7 +95,7 @@ function cssmenumaker_admin_menu_options($cssmenu)
   if(!$cssmenu_step) {
     $cssmenu_step = 1;
   }
-
+  
   /* No Wordpress Menus Present */
   if(empty($wordpress_menus)) {
     print "<div id='no-wordpress-menus-msg'>";
@@ -219,7 +219,7 @@ function cssmenumaker_admin_menu_options($cssmenu)
   } else {
     $classes = "";
   }  
-  print "<div id='theme-select-overlay' class='{$classes}'><div class='container'>";
+  print "<div id='theme-select-overlay' class='{$classes} white-popup mfp-hide'><div class='container clearfix'>";
   print "<div id='filters'>";
   print "<h4>Menu Themes</h4>";  
   print "<ul class='main-cats cats'>";
@@ -282,12 +282,13 @@ function cssmenumaker_admin_menu_database($cssmenu)
   print '<textarea name="cssmenu_js" id="cssmenu_js">'.$cssmenu_js."</textarea>";
   print "<label>Settings</label>";
   print '<textarea name="cssmenu_settings" id="cssmenu_settings">'.$cssmenu_settings."</textarea>";  
-  print "<div id='custom-css-overlay'>";
+  print "<div id='custom-css-overlay'><div>";
   print "<h2>Custom CSS</h2>";
   print "<p>If you would like to create your own CSS styles for this menu, this is the place to do it. The ID for this menu is <span class='code'>#cssmenu-{$cssmenu->ID}</span>. Use this ID in your code below to apply custom CSS styles.</p>";
   print '<textarea name="cssmenu_custom_css" id="cssmenu_custom_css">'.$cssmenu_custom_css."</textarea>";  
-  print "<a href='#' class='button-primary'>Save</a>";
-  print "</div>";
+  print "<a href='#' class='button-primary submit'>Save</a>";
+  print "<a href='#' class='cancel'>Cancel</a>";  
+  print "</div></div>";
 
   
 }
