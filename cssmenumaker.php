@@ -204,7 +204,6 @@ function trial_vis_check($theme_id) {
 /* 
  * Admin Messages
  */
-
 /*
 add_action('admin_notices', 'beta_notice' );
 function beta_notice() {
@@ -216,22 +215,7 @@ function beta_notice() {
     print "</div>";    
   }
 }
-
-add_action('admin_notices', 'demo_notice' );
-function demo_notice() {
-  $screen = get_current_screen();
-  if($screen->id == 'edit-cssmenu' && demo_check()) {
-    print "<div class='error'>";
-    print "<h3>Demo</h3>";
-    print "<p>You are currently using the demo version of MenuMaker. You will be able to create and customize menus, but displaying them in your theme is disabled. Please <a style='text-decoration: underline;' href='http://cssmenumaker.com/wordpress-plugin-support'>purchase a key</a> to unlock the full version.</p>";
-    print "</div>";
-  }
-}
 */
-
-
-
-
 
 
 
